@@ -41,6 +41,8 @@ The site is static, so no build command is needed. The publish directory is set 
 
 ## Enquiry submissions
 
-The MVV–GV Grand enquiry form is configured for Netlify Forms with the name `property-enquiry`. It collects the visitor's name, phone number, budget, preferred area, and buying timeline. Successful submissions go to `thank-you.html`; a honeypot field helps reduce spam.
+The MVV–GV Grand enquiry form is configured for Netlify Forms with the name `property-enquiry`. It collects the visitor's name, phone number, budget, preferred area, and buying timeline. Submissions are sent as URL-encoded POST requests to the static property page, and successful responses redirect to `/thank-you`. The submit button prevents duplicate clicks while sending; failed requests show an inline message and retain the visitor's details for retrying. Without JavaScript, the form uses Netlify's native POST handling. A honeypot field helps reduce spam.
+
+Form detection must be enabled and the updated site deployed before Netlify can accept submissions. The `.netlify/features/netlify-forms` marker enables the feature for this project's deployment workflow. Email notifications are configured separately in the Netlify dashboard.
 
 Submissions are stored by Netlify, not written directly into Google Sheets. To use them in Sheets, export the form submissions as a CSV from the Netlify dashboard and import that CSV into Google Sheets.
