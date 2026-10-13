@@ -18,7 +18,8 @@
     .wrap{width:min(1160px,calc(100% - 44px));margin:auto}
     .topbar{height:76px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.08)}
     .brand{display:flex;align-items:center;gap:11px;text-decoration:none}
-    .brandmark{width:40px;height:40px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;color:var(--gold);font-family:Georgia,serif;font-size:19px}
+    .brand-logo{position:relative;width:44px;height:34px;overflow:hidden;flex:0 0 auto;background:#080909}
+    .brand-logo img{position:absolute;width:64px;height:64px;max-width:none;left:-10px;top:-9px}
     .brandname{font-family:Georgia,serif;letter-spacing:.16em;font-size:15px}
     .top-note{font-size:13px;color:var(--muted);letter-spacing:.04em}
     .top-cta,.button{display:inline-flex;align-items:center;justify-content:center;gap:9px;text-decoration:none;border:1px solid var(--gold);border-radius:999px;padding:11px 18px;font-weight:650;font-size:14px;transition:.2s ease}
@@ -144,7 +145,7 @@
 <body>
   <header class="wrap topbar">
     <a class="brand" href="../" aria-label="Ram Realty properties">
-      <span class="brandmark" aria-hidden="true">R</span><span class="brandname">RAM REALTY</span>
+      <span class="brand-logo" aria-hidden="true"><img src="../assets/Ram-realty-logo.png" alt=""></span><span class="brandname">RAM REALTY</span>
     </a>
     <span class="top-note">VISAKHAPATNAM · ANDHRA PRADESH</span>
     <a class="top-cta" href="https://wa.me/917799251808?text=Hi%20Ram%20Realty%2C%20I%27m%20interested%20in%20MVV-GV%20Grand%20in%20Madhurawada." target="_blank" rel="noopener">WhatsApp Ram Realty <span aria-hidden="true">↗</span></a>
