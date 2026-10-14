@@ -11,6 +11,8 @@ A static property website for Ram Realty, featuring a Visakhapatnam property col
     ├── index.html
     ├── thank-you.html
     ├── privacy.html
+    ├── about.html
+    ├── faq.html
     ├── robots.txt
     ├── sitemap.xml
     ├── assets/
@@ -48,6 +50,12 @@ Then open <http://localhost:8000>. A local static server can display the pages, 
 5. In the Netlify dashboard, open **Forms** and confirm the `property-enquiry` form and test submission appear.
 
 The site is static, so no build command is needed. The publish directory is set to `dist` in `netlify.toml`.
+
+## Search and sharing
+
+Public pages have page-specific titles, descriptions, canonical URLs, and Open Graph/Twitter preview metadata. The homepage and property pages use descriptive content about the actual listings and areas served; the About and FAQ pages provide additional visitor information and are included in `sitemap.xml`. Structured data describes the real estate agent, About page, and visible FAQs. `robots.txt` points crawlers to the sitemap. The enquiry confirmation page remains `noindex`.
+
+Search engines do not use the legacy `meta keywords` tag for ranking, so search phrases are incorporated naturally into titles, descriptions, headings, page copy, and internal links rather than added as keyword lists. Metadata and sitemaps can help crawlers understand the site, but rankings depend on many factors and cannot be guaranteed. Keep project, pricing, availability, business profile, and contact information accurate and current; verify the live deployment and submit the sitemap through Google Search Console and Bing Webmaster Tools.
 
 ## Enquiry submissions
 
