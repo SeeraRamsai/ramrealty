@@ -53,7 +53,7 @@ The site is static, so no build command is needed. The publish directory is set 
 
 The MVV–GV Grand and new project enquiry forms use Netlify Forms with the shared name `property-enquiry`; each includes the property name so submissions can be identified. The MVV page collects the visitor's name, phone number, budget, preferred area, and buying timeline. The new project pages collect name and phone, with optional layout and buying timeline preferences. Successful submissions redirect to `/thank-you.html`; forms include a honeypot to help reduce spam. The MVV page also has custom JavaScript for duplicate-submit prevention and retry messaging.
 
-Form detection must be enabled and the updated site deployed before Netlify can accept submissions. The `.netlify/features/netlify-forms` marker enables the feature for this project's deployment workflow. Email notifications are configured separately in the Netlify dashboard.
+All four property landing pages include a static HTML Netlify form named `property-enquiry`, with the property name, a honeypot, and a redirect to `/thank-you.html`. To receive submissions, sign in to the Netlify dashboard for the `ramrealty` site, open **Forms**, select **Enable form detection**, and deploy the site again. Netlify scans the deployed HTML for forms; the dashboard setting cannot be enabled from this repository. Email notifications are configured separately in the Netlify dashboard.
 
 Submissions are stored by Netlify, not written directly into Google Sheets. To use them in Sheets, export the form submissions as a CSV from the Netlify dashboard and import that CSV into Google Sheets.
 
