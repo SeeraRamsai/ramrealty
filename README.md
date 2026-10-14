@@ -1,6 +1,6 @@
 # Ram Realty property website
 
-A static property website for Ram Realty, featuring a Visakhapatnam property listing and an MVV–GV Grand detail page. The site is served directly from `dist`; it does not require a build step or package installation.
+A static property website for Ram Realty, featuring a Visakhapatnam property collection and project detail pages. The site is served directly from `dist`; it does not require a build step or package installation.
 
 ## Project structure
 
@@ -10,11 +10,21 @@ A static property website for Ram Realty, featuring a Visakhapatnam property lis
 └── dist/
     ├── index.html
     ├── thank-you.html
+    ├── privacy.html
+    ├── robots.txt
+    ├── sitemap.xml
     ├── assets/
-    └── mvv-gv-grand/
-        ├── index.html
-        ├── artwork.png
-        └── videos/
+    │   ├── Ram-realty-logo.png
+    │   ├── luxury-apartment-artwork.png
+    │   ├── documents/
+    │   ├── projects/
+    │   │   └── posters/
+    │   ├── videos/
+    │   └── video-thumbnails/
+    ├── mvv-gv-grand/
+    ├── vaisakhi-west-winds/
+    ├── a-square-maple-woods/
+    └── utkarsha-capital-towers/
 ```
 
 `netlify.toml` configures Netlify to publish the `dist` directory.
@@ -34,15 +44,18 @@ Then open <http://localhost:8000>. A local static server can display the pages, 
 1. Deploy this project to Netlify, either by connecting its Git repository or by uploading the `dist` folder as a manual deploy.
 2. In the Netlify site settings, enable **Form detection** if it is not already enabled.
 3. Deploy or redeploy the site so Netlify can scan the HTML form.
-4. Submit a test enquiry from the deployed `/mvv-gv-grand/` page.
+4. Submit a test enquiry from the deployed `/mvv-gv-grand/` page and one of the new project pages.
 5. In the Netlify dashboard, open **Forms** and confirm the `property-enquiry` form and test submission appear.
 
 The site is static, so no build command is needed. The publish directory is set to `dist` in `netlify.toml`.
 
 ## Enquiry submissions
 
-The MVV–GV Grand enquiry form is configured for Netlify Forms with the name `property-enquiry`. It collects the visitor's name, phone number, budget, preferred area, and buying timeline. Submissions are sent as URL-encoded POST requests to the static property page, and successful responses redirect to `/thank-you`. The submit button prevents duplicate clicks while sending; failed requests show an inline message and retain the visitor's details for retrying. Without JavaScript, the form uses Netlify's native POST handling. A honeypot field helps reduce spam.
+The MVV–GV Grand and new project enquiry forms use Netlify Forms with the shared name `property-enquiry`; each includes the property name so submissions can be identified. The MVV page collects the visitor's name, phone number, budget, preferred area, and buying timeline. The new project pages collect name and phone, with optional layout and buying timeline preferences. Successful submissions redirect to `/thank-you.html`; forms include a honeypot to help reduce spam. The MVV page also has custom JavaScript for duplicate-submit prevention and retry messaging.
 
 Form detection must be enabled and the updated site deployed before Netlify can accept submissions. The `.netlify/features/netlify-forms` marker enables the feature for this project's deployment workflow. Email notifications are configured separately in the Netlify dashboard.
 
 Submissions are stored by Netlify, not written directly into Google Sheets. To use them in Sheets, export the form submissions as a CSV from the Netlify dashboard and import that CSV into Google Sheets.
+
+
+The project pages include Ram Realty owner-share details, downloadable posters and video walkthroughs. Supplied official brochures and floor/building plans are published under `dist/assets/documents/` and linked from the matching project page. The `/videos/` page contains the 11 supplied property clips with branded thumbnails and optimized MP4 versions. Pricing and availability should be reconfirmed against a current written cost sheet.

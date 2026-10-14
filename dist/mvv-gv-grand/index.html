@@ -76,7 +76,7 @@
     .resource-card p{color:var(--muted);font-size:13px;margin:0 0 19px}
     .resource-card .button{margin-top:auto}
     .official-note{font-size:11px;color:#8f897f;margin-top:18px}
-    .walkthrough-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+    .walkthrough-featured{display:grid;grid-template-columns:1fr 360px;gap:24px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;margin:20px 0}.walkthrough-featured h3{font:26px Georgia,serif;font-weight:400;margin:7px 0}.walkthrough-featured p{color:var(--muted)}.walkthrough-featured video{display:block;width:100%;max-height:560px;aspect-ratio:9/16;object-fit:contain;background:#080807;border-radius:8px}.walkthrough-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
     .walkthrough-card{background:var(--ink2);border:1px solid rgba(216,182,106,.25);border-radius:12px;padding:20px}
     .walkthrough-card h3{font-family:Georgia,serif;font-weight:400;font-size:22px;margin:0 0 7px}
     .walkthrough-card p{color:var(--muted);font-size:13px;margin:0 0 16px}
@@ -109,7 +109,7 @@
       .visual{max-width:650px}
       .details-grid{grid-template-columns:1fr}
       .resource-grid{grid-template-columns:1fr}
-      .walkthrough-grid{grid-template-columns:1fr}
+      .walkthrough-featured{grid-template-columns:1fr}.walkthrough-featured video{max-width:420px;margin:auto}.walkthrough-grid{grid-template-columns:1fr}
       .lead-card{grid-template-columns:1fr}
       .fact{padding:7px 12px}
       .fact-value{font-size:19px}
@@ -179,7 +179,7 @@
       <div class="wrap fact-grid">
         <div class="fact"><div class="fact-label">Configuration</div><div class="fact-value">3 BHK</div><div class="fact-detail">Spacious family homes</div></div>
         <div class="fact"><div class="fact-label">Area range</div><div class="fact-value">1,390–2,004</div><div class="fact-detail">Square feet</div></div>
-        <div class="fact"><div class="fact-label">Advertised rate</div><div class="fact-value">From ₹5,400</div><div class="fact-detail">Per sq ft · confirm final quote</div></div>
+        <div class="fact"><div class="fact-label">Quoted Price</div><div class="fact-value">From ₹5,400 / sq ft</div><div class="fact-detail">Confirm final quote against cost sheet</div></div>
         <div class="fact"><div class="fact-label">Expected possession</div><div class="fact-value">Dec 2028</div><div class="fact-detail">Under construction</div></div>
       </div>
     </section>
@@ -195,7 +195,7 @@
           <h3>Property snapshot</h3>
           <div class="detail-row"><span>Home type</span><strong>Premium 3 BHK apartment</strong></div>
           <div class="detail-row"><span>Area range</span><strong>1,390–2,004 sq ft</strong></div>
-          <div class="detail-row"><span>Starting rate supplied</span><strong>₹5,400 per sq ft</strong></div>
+          <div class="detail-row"><span>Quoted Price</span><strong>From ₹5,400 / sq ft</strong></div>
           <div class="detail-row"><span>Ownership type</span><strong>Owner’s share flats</strong></div>
           <div class="detail-row"><span>Amenities / maintenance noted</span><strong>₹5 lakh / ₹6 lakh lifetime maintenance</strong></div>
           <div class="detail-row"><span>Construction status</span><strong>Under construction</strong></div>
@@ -244,22 +244,29 @@
       <div class="section-head">
         <div class="section-kicker">Walk through the space</div>
         <h2 id="walkthrough-title">See the current construction-stage walkthrough.</h2>
-        <p class="section-copy">Two owner-provided clips are included for a closer look. The clearer, higher-resolution clip is featured first; both have been lightly stabilized and adjusted for viewing.</p>
+        <p class="section-copy">The demo home tour is featured first, followed by two additional owner-provided clips. All three have a branded opening and light visual cleanup; the supplied footage and audio are preserved.</p>
       </div>
+      <article class="walkthrough-featured">
+        <div><div class="section-kicker">Primary video</div><h3>MVV–GV Grand · Demo home tour</h3><p>Featured interior walkthrough supplied for the MVV–GV Grand page.</p></div>
+        <video controls playsinline preload="none" poster="../assets/video-thumbnails/mvv-demo-home-tour.jpg">
+          <source src="../assets/videos/mvv-demo-home-tour.mp4" type="video/mp4">
+          Your browser does not support HTML video.
+        </video>
+      </article>
       <div class="walkthrough-grid">
         <article class="walkthrough-card">
-          <h3>Featured walkthrough · clearer footage</h3>
-          <p>Higher-resolution portrait clip with stabilized motion and balanced audio.</p>
-          <video controls playsinline preload="metadata">
-            <source src="videos/mvv-gv-grand-walkthrough-higher-resolution.mp4" type="video/mp4">
+          <h3>Additional walkthrough · interior views</h3>
+          <p>Owner-provided portrait walkthrough with a branded title slate and a light visual cleanup.</p>
+          <video controls playsinline preload="none" poster="../assets/video-thumbnails/mvv-gv-grand-1.jpg">
+            <source src="../assets/videos/mvv-gv-grand-1.mp4" type="video/mp4">
             Your browser does not support HTML video.
           </video>
         </article>
         <article class="walkthrough-card">
-          <h3>Alternate walkthrough</h3>
-          <p>Additional room views from the second owner-provided clip.</p>
-          <video controls playsinline preload="metadata">
-            <source src="videos/mvv-gv-grand-walkthrough-alternate.mp4" type="video/mp4">
+          <h3>Additional walkthrough · site footage</h3>
+          <p>Additional site and construction-stage views from the second owner-provided clip.</p>
+          <video controls playsinline preload="none" poster="../assets/video-thumbnails/mvv-gv-grand.jpg">
+            <source src="../assets/videos/mvv-gv-grand.mp4" type="video/mp4">
             Your browser does not support HTML video.
           </video>
         </article>
