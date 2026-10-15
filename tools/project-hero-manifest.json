@@ -1,0 +1,30 @@
+[
+  {
+    "slug": "mvv-gv-grand",
+    "file": "assets/responsive/mvv-gv-grand-concept-hero-v1.jpg",
+    "width": 1280,
+    "height": 853,
+    "bytes": 117036
+  },
+  {
+    "slug": "vaisakhi-west-winds",
+    "file": "assets/responsive/vaisakhi-west-winds-concept-hero-v1.jpg",
+    "width": 1280,
+    "height": 853,
+    "bytes": 133144
+  },
+  {
+    "slug": "a-square-maple-woods",
+    "file": "assets/responsive/a-square-maple-woods-concept-hero-v1.jpg",
+    "width": 1280,
+    "height": 853,
+    "bytes": 128546
+  },
+  {
+    "slug": "utkarsha-capital-towers",
+    "file": "assets/responsive/utkarsha-capital-towers-concept-hero-v1.jpg",
+    "width": 1280,
+    "height": 853,
+    "bytes": 106032
+  }
+]

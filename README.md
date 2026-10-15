@@ -43,6 +43,8 @@ Then open <http://localhost:8000>. A local static server can display the pages, 
 
 ## Deploy to Netlify
 
+Keep edits and QA local until the owner explicitly requests a Git push. Pushing the production branch can trigger a Netlify deployment that consumes hosting credits. Group approved changes into one release; do not create previews or redeploy for routine document edits. See `WEBSITE_MAINTENANCE.md` for release and rollback checks.
+
 1. Deploy this project to Netlify, either by connecting its Git repository or by uploading the `dist` folder as a manual deploy.
 2. In the Netlify site settings, enable **Form detection** if it is not already enabled.
 3. Deploy or redeploy the site so Netlify can scan the HTML form.
@@ -59,7 +61,7 @@ Search engines do not use the legacy `meta keywords` tag for ranking, so search 
 
 ## Enquiry submissions
 
-All four project enquiry forms use Netlify Forms with the shared name `property-enquiry` and include the property name so submissions can be identified. The MVV–GV Grand form collects name, phone, budget, preferred area and buying timeline. The other project forms collect name and phone, require a preferred layout and offer an optional buying timeline. The three non-MVV forms also attach available UTM campaign values and the referring page URL. All forms require contact consent and include a honeypot. With JavaScript enabled, submissions show an in-page confirmation or retry/contact message; without JavaScript, the Netlify form action redirects to `/thank-you.html`.
+All four project enquiry forms use Netlify Forms with the shared name `property-enquiry` and include the property name so submissions can be identified. The MVV–GV Grand form collects name, phone, budget, preferred area and buying timeline. The other project forms collect name and phone, require a preferred layout and offer an optional buying timeline. The three non-MVV forms also attach available UTM campaign values. They do not attach the referring page URL. All forms require contact consent and include a honeypot. With JavaScript enabled, submissions show an in-page confirmation or retry/contact message; without JavaScript, the Netlify form action redirects to `/thank-you.html`.
 
 All four property landing pages include a static HTML Netlify form named `property-enquiry`, with the property name, a honeypot, and a redirect to `/thank-you.html`. To receive submissions, sign in to the Netlify dashboard for the `ramrealty` site, open **Forms**, select **Enable form detection**, and deploy the site again. Netlify scans the deployed HTML for forms; the dashboard setting cannot be enabled from this repository. Email notifications are configured separately in the Netlify dashboard.
 
@@ -80,7 +82,7 @@ After deploying, verify each enquiry form in Netlify and check the sitemap and p
 
 ## Responsive images and project banners
 
-The homepage uses responsive WebP sources with legacy fallbacks. Four project pages include AI-generated concept illustration banners with accessible HTML descriptions and explicit illustrative labels. These banners do not establish the actual building design, views or amenities. Banner masters and prompts are documented in `artwork/project-banners/README.md`; only compressed web derivatives are deployed. `tools/optimize-images.cjs` recreates derivatives when Sharp and the local masters are available.
+The homepage uses responsive WebP sources with legacy fallbacks. The project pages promote four distinct AI-generated concept illustrations into the main hero beside each project title and removes the repeated lower banner. Each has its own artwork, project/locality copy, colour accent and explicit illustrative disclosure; the artwork does not establish the actual building design, views or amenities. Masters and original generation prompts are documented in `artwork/project-banners/README.md`. `tools/optimize-images.cjs` recreates WebP derivatives when Sharp and the local masters are available; `node tools/export-project-hero-fallbacks.cjs` recreates JPEG fallbacks/social images. No new image generation was needed for the hero revision.
 
 A server-rendered, collapsible homepage table compares the four listings by area basis, status, quoted rate and listed charges. Update it alongside project pages when confirmed inventory information changes. Netlify-only enquiry reporting is documented in `ENQUIRY_REPORTING.md`; no analytics SDK or click-tracking endpoint has been added.
 
@@ -90,3 +92,11 @@ A server-rendered, collapsible homepage table compares the four listings by area
 Walkthroughs default to separate data-saver MP4s, with original quality still selectable. The player attaches a media source only after an explicit Play action, keeps at most one player loaded, and releases the media source when closed, far offscreen, on page hide or when switching quality. Portrait footage uses a taller active player on phones. No autoplay occurs on initial page load.
 
 See `VIDEO_OPTIMIZATION.md` for the encoding profile, regeneration commands and tradeoffs. Run `node tools/test-video-player.mjs` after changing player behavior. The original videos remain available and are not overwritten by optimization.
+
+Walkthrough poster images now use responsive WebP derivatives with JPEG fallbacks. The brand image also has a small WebP source with its PNG fallback retained. Run `node tools/optimize-previews.cjs` with the existing local Sharp installation to regenerate these assets; `tools/preview-manifest.json` records the resulting dimensions and byte sizes. No image tool is required by the deployed site.
+
+`tools/public-audit.py` performs a bounded, cached public GET/HEAD audit without submitting forms. It writes dated evidence to ignored `audit-results/`; it is not a substitute for browser QA or an accessibility conformance assessment. `PUBLIC_WEBSITE_AUDIT_2026-10-15.md` distinguishes the current public findings from verified local fixes awaiting an authorized release.
+
+Run `python tools/check-project-seo.py` after changing metadata or project heroes. It checks the nine sitemap pages, sharing metadata, distinct project art, image priority/disclosure, contextual links and homepage WebSite name data. `SEO_REVIEW_2026-10-15.md` records the editorial SEO assessment, keyword/topic map, public backlink limitation and local verification results. Dated audit reports are local working evidence and are not included in the release.
+
+Current editable copy uses the owner's preferred locality spelling, Madhuravada. Run `python tools/check-listing-consistency.py` after changing listing information; it checks locality/structured-address consistency, MVV's confirmed starting rate of ₹5,300/sq ft, homepage comparison and poster references. The current MVV download is `dist/assets/projects/posters/mvv-gv-grand.svg`; original supplied artwork/documents are preserved. `LOCALITY_AND_PRICE_UPDATE.md` records the scope, public indexing limitations and all four illustrated project previews. No spelling change alone guarantees indexing or rankings.

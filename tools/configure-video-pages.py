@@ -20,7 +20,7 @@ for p in Path('dist').rglob('*.html'):
   return '<div class="video-player"'+attrs+'>'+body+'</div>'
  s=re.sub(r'<div class="video-player"([^>]*)>(.*?)</div>',replace,s,flags=re.S)
  s=re.sub(r'assets/video-player\.js(?:\?v=\d+)?"','assets/video-player.js?v=2"',s)
- s=re.sub(r'assets/video-player\.css(?:\?v=\d+)?"','assets/video-player.css?v=2"',s)
+ s=re.sub(r'assets/video-player\.css(?:\?v=\d+)?"','assets/video-player.css?v=3"',s)
  if p.parent.name=='videos':
   s=s.replace('Load video player','Play walkthrough')
   s=s.replace('</h1>','</h1><p class="section-copy">Data saver is selected by default. Choose original quality for finer detail. Only one player stays loaded; videos release their resources when closed, far offscreen or the page is hidden.</p>',1) if 'Data saver is selected by default.' not in s else s

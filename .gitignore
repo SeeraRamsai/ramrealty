@@ -3,3 +3,5 @@
 audit-results/
 artwork/project-banners/*.png
 Microsoft/Windows/PowerShell/
+__pycache__/
+*.pyc

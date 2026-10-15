@@ -35,8 +35,19 @@ for p in root.rglob('*.html'):
     f=root/unquote(v.path.lstrip('/')) if v.path.startswith('/') else p.parent/unquote(v.path)
     if f.is_dir():f=f/'index.html'
     check(f.exists(),f'missing asset {u}')
-   if v.fragment and not v.path:check(unquote(v.fragment) in ids,f'missing fragment {u}')
- for raw in re.findall(r'<script type="application/ld\+json">(.*?)</script>',s,re.S):json.loads(raw);checks+=1
+   if v.fragment:
+    target_ids=ids
+    if v.path and f.exists() and f.suffix=='.html':
+     target_ids=[a['id'] for t,a in Page(f.read_text(encoding='utf-8')).tags if 'id' in a]
+    if not v.path or (f.exists() and f.suffix=='.html'):
+     check(unquote(v.fragment) in target_ids,f'missing fragment {u}')
+ for raw in re.findall(r'<script type="application/ld\+json">(.*?)</script>',s,re.S):
+  schema=json.loads(raw);checks+=1
+  if isinstance(schema,dict) and schema.get('@type')=='RealEstateListing':
+   check('address' not in schema and 'broker' not in schema,'listing uses supported WebPage properties')
+   check(schema.get('about',{}).get('@type')=='ApartmentComplex','listing describes the apartment project')
+   check(schema.get('publisher',{}).get('telephone')=='+91-77992-51808','listing publisher contact')
+   check(schema.get('breadcrumb',{}).get('@type')=='BreadcrumbList','listing breadcrumb data')
  if any(t=='form' for t,a in page.tags):
   check('name="form-name" value="property-enquiry"' in s,'Netlify form name')
   check('name="contact_consent"' in s,'consent field')
@@ -51,6 +62,29 @@ expected_fields=set().union(*(names for _,names in field_sets))
 for page_path,names in field_sets:
  checks+=1
  if names!=expected_fields:errors.append(f'{page_path}: shared Netlify schema missing {sorted(expected_fields-names)}')
-ET.parse(root/'sitemap.xml');tomllib.loads(Path('netlify.toml').read_text());checks+=2
+sitemap=ET.parse(root/'sitemap.xml');config=tomllib.loads(Path('netlify.toml').read_text());checks+=2
+# Canonical destinations must exist, be indexable and agree with the sitemap.
+titles=[]
+for loc in sitemap.findall('.//{http://www.sitemaps.org/schemas/sitemap/0.9}loc'):
+ u=loc.text;target=root/urlsplit(u).path.lstrip('/')
+ if target.is_dir():target=target/'index.html'
+ check(target.exists(),f'sitemap target missing {u}')
+ if not target.exists():continue
+ parsed=Page(target.read_text(encoding='utf-8'))
+ check(any(t=='link' and a.get('rel')=='canonical' and a.get('href')==u for t,a in parsed.tags),f'sitemap/canonical mismatch {u}')
+ check(not any(t=='meta' and a.get('name','').lower()=='robots' and 'noindex' in a.get('content','').lower() for t,a in parsed.tags),f'sitemap target noindex {u}')
+ title=re.search(r'<title>(.*?)</title>',target.read_text(encoding='utf-8'),re.S)
+ check(bool(title and title.group(1).strip()),f'missing title {u}')
+ if title:titles.append(title.group(1))
+check(len(titles)==len(set(titles)),'duplicate sitemap page titles')
+redirects={r['from']:r['to'] for r in config.get('redirects',[])}
+for start,target in redirects.items():
+ seen=set();current=start
+ while current in redirects and current not in seen:seen.add(current);current=redirects[current]
+ check(current not in seen,f'redirect loop {start}')
+ if not urlsplit(target).scheme:
+  f=root/target.lstrip('/')
+  if f.is_dir():f=f/'index.html'
+  check(f.exists(),f'redirect target missing {target}')
 print(json.dumps({'checks':checks,'errors':errors},indent=2))
 raise SystemExit(bool(errors))

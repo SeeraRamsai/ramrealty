@@ -1,0 +1,21 @@
+/* Project-specific concept art; factual listing details remain selectable HTML. */
+.project-concept{margin:0;min-width:0;align-self:center}
+.concept-scene{position:relative;isolation:isolate;overflow:hidden;aspect-ratio:5/4;border:1px solid #74623e;border-radius:14px;background:#181a1b}
+.concept-scene::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(180deg,rgba(10,12,14,.22),transparent 35%,rgba(10,12,14,.24) 60%,rgba(10,12,14,.94))}
+.concept-scene picture{display:block;width:100%;height:100%}
+.hero .concept-scene img{display:block;width:100%;height:100%;aspect-ratio:auto;object-fit:cover;object-position:75% center;border:0;border-radius:0}
+.concept-mark{position:absolute;z-index:1;top:18px;left:18px;padding:7px 10px;border:1px solid rgba(232,207,151,.6);border-radius:99px;background:rgba(17,16,14,.87);color:#f2dab0;font:600 10px/1.4 system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase}
+.concept-copy{position:absolute;z-index:1;bottom:22px;left:24px;right:24px;color:#f5f0e6}
+.hero .concept-copy p{margin:0;max-width:none;color:inherit}
+.hero .concept-copy .concept-area{font:600 10px/1.6 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#f0d79e}
+.hero .concept-copy .concept-name{font:400 clamp(25px,2.6vw,38px)/1.12 Georgia,serif;margin:8px 0;letter-spacing:-.02em}
+.hero .concept-copy .concept-subtitle{font:13px/1.6 system-ui,sans-serif;color:#eee6d6}
+.concept-caption{padding:11px 2px 0;color:#b9b3a8;font:11px/1.6 system-ui,sans-serif}
+.concept-caption a{display:inline-flex;align-items:center;min-height:32px;color:#efd9aa;text-underline-offset:4px}
+.concept-mvv{--concept-accent:#7d9cbd}.concept-west-winds{--concept-accent:#b2b990}.concept-maple-woods{--concept-accent:#91ad88}.concept-capital-towers{--concept-accent:#8da4cf}
+.concept-scene{box-shadow:0 16px 45px rgba(0,0,0,.22);border-top:3px solid var(--concept-accent,#d8b66a)}
+.project-context{color:#c9c3b9;font:14px/1.7 system-ui,sans-serif;margin:20px 0 0}
+.project-context a{color:#efd9aa;text-underline-offset:4px}
+.hero .project-concept{grid-row:auto}
+@media(max-width:760px){.hero .project-concept{grid-row:1}.concept-scene{aspect-ratio:5/4}.concept-copy{left:20px;right:20px;bottom:20px}.hero .concept-copy .concept-name{font-size:28px}.concept-mark{top:14px;left:14px}}
+@media(max-width:360px){.concept-scene{aspect-ratio:1/1}.hero .concept-copy .concept-name{font-size:25px}.concept-copy{left:16px;right:16px;bottom:16px}.hero .concept-copy .concept-subtitle{font-size:12px}}

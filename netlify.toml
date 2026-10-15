@@ -1,2 +1,24 @@
 [build]
   publish = "dist"
+
+# Preserve the existing .html canonical URLs and do not rewrite page links.
+[build.processing.html]
+  pretty_urls = false
+
+[[redirects]]
+  from = "/about"
+  to = "/about.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/faq"
+  to = "/faq.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/privacy"
+  to = "/privacy.html"
+  status = 301
+  force = true

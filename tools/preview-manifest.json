@@ -1,0 +1,230 @@
+[
+  {
+    "input": "dist/assets/video-thumbnails/a-square-maple-woods.jpg",
+    "originalBytes": 62405,
+    "derivatives": [
+      {
+        "file": "assets/responsive/a-square-maple-woods-preview-640.webp",
+        "width": 640,
+        "height": 360,
+        "bytes": 7460
+      },
+      {
+        "file": "assets/responsive/a-square-maple-woods-preview-1200.webp",
+        "width": 1200,
+        "height": 675,
+        "bytes": 16172
+      }
+    ]
+  },
+  {
+    "input": "dist/assets/video-thumbnails/abhaya-enclave-1845-sft-pm-palemon.jpg",
+    "originalBytes": 54191,
+    "derivatives": [
+      {
+        "file": "assets/responsive/abhaya-enclave-1845-sft-pm-palemon-preview-640.webp",
+        "width": 640,
+        "height": 360,
+        "bytes": 5928
+      },
+      {
+        "file": "assets/responsive/abhaya-enclave-1845-sft-pm-palemon-preview-1200.webp",
+        "width": 1200,
+        "height": 675,
+        "bytes": 12736
+      }
+    ]
+  },
+  {
+    "input": "dist/assets/video-thumbnails/asn-residency.jpg",
+    "originalBytes": 47259,
+    "derivatives": [
+      {
+        "file": "assets/responsive/asn-residency-preview-640.webp",
+        "width": 640,
+        "height": 360,
+        "bytes": 5072
+      },
+      {
+        "file": "assets/responsive/asn-residency-preview-1200.webp",
+        "width": 1200,
+        "height": 675,
+        "bytes": 10930
+      }
+    ]
+  },
+  {
+    "input": "dist/assets/video-thumbnails/flame-origin-yendada-seaview-flat.jpg",
+    "originalBytes": 66973,
+    "derivatives": [
+      {
+        "file": "assets/responsive/flame-origin-yendada-seaview-flat-preview-640.webp",
+        "width": 640,
+        "height": 360,
+        "bytes": 8944
+      },
+      {
+        "file": "assets/responsive/flame-origin-yendada-seaview-flat-preview-1200.webp",
+        "width": 1200,
+        "height": 675,
+        "bytes": 19152
+      }
+    ]
+  },
+  {
+    "input": "dist/assets/video-thumbnails/golden-fortune-1110-sft.jpg",
+    "originalBytes": 54921,
+    "derivatives": [
+      {
+        "file": "assets/responsive/golden-fortune-1110-sft-preview-640.webp",
+        "width": 640,
+        "height": 360,
+        "bytes": 5974
+      },
+      {
+        "file": "assets/responsive/golden-fortune-1110-sft-preview-1200.webp",
+        "width": 1200,
+        "height": 675,
+        "bytes": 13022
+      }
+    ]
+  },
+  {
+    "input": "dist/assets/video-thumbnails/golden-fortune.jpg",
+    "originalBytes": 57858,
+    "derivatives": [
+      {
+        "file": "assets/responsive/golden-fortune-preview-640.webp",
+        "width": 640,
+        "height": 360,
+        "bytes": 6470
+      },
+      {
+        "file": "assets/responsive/golden-fortune-preview-1200.webp",
+        "width": 1200,
+        "height": 675,
+        "bytes": 14268
+      }
+    ]
+  },
+  {
+    "input": "dist/assets/video-thumbnails/harshitha-heights.jpg",
+    "originalBytes": 59046,
+    "derivatives": [
+      {
+        "file": "assets/responsive/harshitha-heights-preview-640.webp",
+        "width": 640,
+        "height": 360,
+        "bytes": 6596
+      },
+      {
+        "file": "assets/responsive/harshitha-heights-preview-1200.webp",
+        "width": 1200,
+        "height": 675,
+        "bytes": 14776
+      }
+    ]
+  },
+  {
+    "input": "dist/assets/video-thumbnails/mvv-demo-home-tour.jpg",
+    "originalBytes": 68363,
+    "derivatives": [
+      {
+        "file": "assets/responsive/mvv-demo-home-tour-preview-640.webp",
+        "width": 640,
+        "height": 360,
+        "bytes": 8712
+      },
+      {
+        "file": "assets/responsive/mvv-demo-home-tour-preview-1200.webp",
+        "width": 1200,
+        "height": 675,
+        "bytes": 18342
+      }
+    ]
+  },
+  {
+    "input": "dist/assets/video-thumbnails/mvv-gv-grand-1.jpg",
+    "originalBytes": 60729,
+    "derivatives": [
+      {
+        "file": "assets/responsive/mvv-gv-grand-1-preview-640.webp",
+        "width": 640,
+        "height": 360,
+        "bytes": 7006
+      },
+      {
+        "file": "assets/responsive/mvv-gv-grand-1-preview-1200.webp",
+        "width": 1200,
+        "height": 675,
+        "bytes": 15290
+      }
+    ]
+  },
+  {
+    "input": "dist/assets/video-thumbnails/mvv-gv-grand.jpg",
+    "originalBytes": 79667,
+    "derivatives": [
+      {
+        "file": "assets/responsive/mvv-gv-grand-preview-640.webp",
+        "width": 640,
+        "height": 360,
+        "bytes": 10456
+      },
+      {
+        "file": "assets/responsive/mvv-gv-grand-preview-1200.webp",
+        "width": 1200,
+        "height": 675,
+        "bytes": 24370
+      }
+    ]
+  },
+  {
+    "input": "dist/assets/video-thumbnails/utkarsha-capital-towers.jpg",
+    "originalBytes": 59049,
+    "derivatives": [
+      {
+        "file": "assets/responsive/utkarsha-capital-towers-preview-640.webp",
+        "width": 640,
+        "height": 360,
+        "bytes": 6722
+      },
+      {
+        "file": "assets/responsive/utkarsha-capital-towers-preview-1200.webp",
+        "width": 1200,
+        "height": 675,
+        "bytes": 14756
+      }
+    ]
+  },
+  {
+    "input": "dist/assets/video-thumbnails/vaisakhi-west-winds.jpg",
+    "originalBytes": 73468,
+    "derivatives": [
+      {
+        "file": "assets/responsive/vaisakhi-west-winds-preview-640.webp",
+        "width": 640,
+        "height": 360,
+        "bytes": 8750
+      },
+      {
+        "file": "assets/responsive/vaisakhi-west-winds-preview-1200.webp",
+        "width": 1200,
+        "height": 675,
+        "bytes": 21740
+      }
+    ]
+  },
+  {
+    "input": "dist/assets/ram-realty-logo-small.png",
+    "originalBytes": 21491,
+    "derivatives": [
+      {
+        "file": "assets/responsive/ram-realty-logo-v1.webp",
+        "width": 140,
+        "height": 140,
+        "bytes": 2632
+      }
+    ]
+  }
+]
