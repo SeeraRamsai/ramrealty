@@ -31,6 +31,16 @@ for p in root.rglob('*.html'):
   check('name="form-name" value="property-enquiry"' in s,'Netlify form name')
   check('name="contact_consent"' in s,'consent field')
   check('name="bot-field"' in s,'honeypot')
+# Shared Netlify form names must register the same union of fields on every page.
+field_sets=[]
+for page_path in root.rglob('*.html'):
+ parsed=Page(page_path.read_text(encoding='utf-8'))
+ if any(t=='form' and a.get('name')=='property-enquiry' for t,a in parsed.tags):
+  field_sets.append((page_path,{a['name'] for t,a in parsed.tags if t in ('input','select','textarea') and a.get('name')}))
+expected_fields=set().union(*(names for _,names in field_sets))
+for page_path,names in field_sets:
+ checks+=1
+ if names!=expected_fields:errors.append(f'{page_path}: shared Netlify schema missing {sorted(expected_fields-names)}')
 ET.parse(root/'sitemap.xml');tomllib.loads(Path('netlify.toml').read_text());checks+=2
 print(json.dumps({'checks':checks,'errors':errors},indent=2))
 raise SystemExit(bool(errors))
