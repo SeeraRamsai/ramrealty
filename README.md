@@ -67,3 +67,12 @@ Submissions are stored by Netlify, not written directly into Google Sheets. To u
 
 
 The project pages include Ram Realty owner-share details, downloadable posters and video walkthroughs. Supplied official brochures and floor/building plans are published under `dist/assets/documents/` and linked from the matching project page. The `/videos/` page contains 12 supplied property clips. Posters load lazily, and each MP4 source is added only after a visitor chooses to load its player; native controls then require an explicit play action. Pricing, area basis, possession/status, charges and RERA details should be reconfirmed against current project records.
+
+
+## Validate before deployment
+
+Run `python tools/audit_site.py`, `node tools/test-enquiry.mjs`, and `git diff --check` before pushing. The enquiry test uses a local HTTP receiver and DOM stubs; it does not submit real leads or verify Netlify notification delivery. Generated test reports are written to `audit-results/` and should remain local.
+
+Shared accessibility styling is in `dist/assets/site-accessibility.css`. The displayed logo and selected homepage artwork use smaller derivatives; original artwork remains available. `netlify.toml` configures response headers and one-day revalidated caching for assets. The custom `404.html` is served by Netlify for missing pages.
+
+After deploying, verify each enquiry form in Netlify and check the sitemap and production response headers. Search Console verification is configured in DNS, so no ownership token is embedded in this repository.

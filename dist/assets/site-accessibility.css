@@ -1,0 +1,9 @@
+/* Shared keyboard, motion and small-screen improvements. */
+.skip-link{position:fixed;top:8px;left:8px;z-index:1000;padding:12px 18px;background:#f5f0e6;color:#11100e;transform:translateY(-180%)}
+.skip-link:focus{transform:none}
+:focus-visible{outline:3px solid #e5c77f;outline-offset:4px}
+html{scroll-padding-bottom:100px}
+main{scroll-margin-top:16px}
+a,button,input,select{touch-action:manipulation}
+@media(max-width:640px){.topbar:has(.nav){height:auto;min-height:72px;flex-wrap:wrap;gap:14px;padding-block:16px}.nav{flex-wrap:wrap;gap:14px}.nav a:not(.nav-cta){display:inline-flex;align-items:center;min-height:44px}.nav a{min-height:44px}.top-actions .pill{min-height:44px}.fields input,.fields select{font-size:16px}.sticky~*{scroll-margin-bottom:100px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation:none!important;transition:none!important}}

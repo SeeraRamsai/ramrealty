@@ -101,11 +101,11 @@
     @media(max-width:390px){.property-card{grid-template-columns:1fr}.property-image{height:210px;min-height:210px}.property-copy{min-height:205px}.hero-visual{min-height:290px}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
   </style>
-</head>
-<body>
+<link rel="stylesheet" href="/assets/site-accessibility.css"><link rel="icon" type="image/png" href="/assets/ram-realty-logo-small.png"></head>
+<body><a class="skip-link" href="#main-content">Skip to main content</a>
   <header class="wrap topbar">
     <a class="brand" href="./" aria-label="Ram Realty home">
-      <span class="brand-logo" aria-hidden="true"><img src="assets/Ram-realty-logo.png" alt=""></span>
+      <span class="brand-logo" aria-hidden="true"><img src="assets/ram-realty-logo-small.png" alt=""></span>
       <span class="brandname">RAM REALTY</span>
     </a>
     <nav class="nav" aria-label="Main navigation">
@@ -116,7 +116,7 @@
     </nav>
   </header>
 
-  <main>
+  <main id="main-content" tabindex="-1">
     <section class="wrap hero" aria-labelledby="hero-title">
       <div class="hero-copy">
         <div class="eyebrow">Curated owner-share homes · Visakhapatnam</div>
@@ -129,7 +129,7 @@
       </div>
       <div class="hero-visual">
         <span class="hero-index">01 / YOUR VIZAG HOME SEARCH</span>
-        <img class="hero-image" src="assets/Blue%20Hour%203%20BHK%20Property%20Enquiry%20Utkarsha.png" alt="Representative 3 BHK owner-share apartment rendering in Madhurawada" fetchpriority="high">
+        <img class="hero-image" src="assets/utkarsha-home-hero.jpg" alt="Representative 3 BHK owner-share apartment rendering in Madhurawada" fetchpriority="high">
         <div class="image-caption"><strong>Two kinds of community.</strong>Owner-share options in standalone and gated communities.<small>Representative project visual</small></div>
       </div>
     </section>
@@ -154,7 +154,7 @@
       </div>
       <div class="property-grid">
         <a class="property-card" href="mvv-gv-grand/">
-          <div class="property-image property-image-poster"><img src="mvv-gv-grand/artwork.png" alt="MVV-GV Grand residential building artwork" width="1254" height="1254" loading="lazy"></div>
+          <div class="property-image property-image-poster"><img src="assets/mvv-grand-display.jpg" alt="MVV-GV Grand residential building artwork" width="1254" height="1254" loading="lazy"></div>
           <div class="property-copy">
             <span class="property-type">Under construction · Expected Dec 2028</span>
             <h3>MVV–GV Grand</h3>
@@ -176,12 +176,12 @@
           </div>
         </a>
         <a class="property-card" href="a-square-maple-woods/">
-          <div class="property-image property-image-poster"><img src="assets/Luxury%203%20BHK%20Enquiry%20Poster%20Maple%20Woods.png" alt="A Square Maple Woods 3 BHK owner-share apartment representative image and property details" width="1122" height="1402" loading="lazy"></div>
+          <div class="property-image property-image-poster"><img src="assets/maple-woods-home-card.jpg" alt="A Square Maple Woods 3 BHK owner-share apartment representative image and property details" width="1122" height="1402" loading="lazy"></div>
           <div class="property-copy">
             <span class="property-type">3 BHK · Confirm current unit list</span>
             <h3>A Square Maple Woods</h3>
             <p class="property-place">Sai Priya Layout, Madhurawada</p>
-            <div class="property-specs"><span>Approx. 1,750 sq ft*</span><span>Owner’s share</span></div>
+            <div class="property-specs"><span>Reported 1,750 sq ft; verify basis</span><span>Owner’s share</span></div>
             <div class="property-price">₹5,800 <small>/ sq ft · indicative</small></div>
             <div class="card-link">Explore property <span aria-hidden="true">↗</span></div>
           </div>
@@ -237,7 +237,7 @@
         <a href="tel:+917799251808">+91 77992 51808</a>
       </nav>
     </div>
-    <p>Property details, pricing, availability, approvals, possession and charges should be confirmed against current project documents. Images may be illustrative. Property consultant: Ramsai Seera. Location: PM Palem, Visakhapatnam. Hours: 8 AM–11 PM daily.</p>
+    <p>Property details, pricing, availability, approvals, possession and charges should be confirmed against current project documents. Images may be illustrative. Property consultant: Ramsai Seera. Office location: PM Palem, Visakhapatnam. Contact hours: 8 AM–11 PM daily.</p>
   </footer>
 </body>
 </html>

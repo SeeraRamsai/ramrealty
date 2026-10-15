@@ -20,6 +20,7 @@ document.querySelectorAll("form[data-netlify='true']").forEach((form) => {
       throw new Error("Enquiry form has no submit button.");
     }
 
+    if (!form.reportValidity()) return;
     form.dataset.submitting = "true";
     submitButton.disabled = true;
     status.hidden = false;
@@ -27,7 +28,7 @@ document.querySelectorAll("form[data-netlify='true']").forEach((form) => {
 
     try {
       const body = new URLSearchParams(new FormData(form));
-      const response = await fetch(form.action, {
+      const response = await fetch("/", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: body.toString(),
@@ -37,6 +38,7 @@ document.querySelectorAll("form[data-netlify='true']").forEach((form) => {
         throw new Error(`Enquiry submission failed with HTTP ${response.status}.`);
       }
 
+      submitButton.textContent = "Enquiry sent";
       status.textContent =
         "Your enquiry has been sent. Ram Realty will follow up about this property.";
     } catch (error) {
