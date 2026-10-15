@@ -1,0 +1,122 @@
+[
+  {
+    "original": "dist/assets/videos/a-square-maple-woods.mp4",
+    "mobile": "dist/assets/videos/mobile/a-square-maple-woods-v1.mp4",
+    "originalBytes": 12369356,
+    "mobileBytes": 4536006,
+    "durationSeconds": 123.93,
+    "audioPreserved": true,
+    "decoded": true,
+    "faststart": true
+  },
+  {
+    "original": "dist/assets/videos/abhaya-enclave-1845-sft-pm-palemon.mp4",
+    "mobile": "dist/assets/videos/mobile/abhaya-enclave-1845-sft-pm-palemon-v1.mp4",
+    "originalBytes": 12122817,
+    "mobileBytes": 5107705,
+    "durationSeconds": 124.84,
+    "audioPreserved": true,
+    "decoded": true,
+    "faststart": true
+  },
+  {
+    "original": "dist/assets/videos/asn-residency.mp4",
+    "mobile": "dist/assets/videos/mobile/asn-residency-v1.mp4",
+    "originalBytes": 12579341,
+    "mobileBytes": 5015584,
+    "durationSeconds": 140.73,
+    "audioPreserved": true,
+    "decoded": true,
+    "faststart": true
+  },
+  {
+    "original": "dist/assets/videos/flame-origin-yendada-seaview-flat.mp4",
+    "mobile": "dist/assets/videos/mobile/flame-origin-yendada-seaview-flat-v1.mp4",
+    "originalBytes": 10698485,
+    "mobileBytes": 4779290,
+    "durationSeconds": 111.08,
+    "audioPreserved": true,
+    "decoded": true,
+    "faststart": true
+  },
+  {
+    "original": "dist/assets/videos/golden-fortune-1110-sft.mp4",
+    "mobile": "dist/assets/videos/mobile/golden-fortune-1110-sft-v1.mp4",
+    "originalBytes": 8014277,
+    "mobileBytes": 3035471,
+    "durationSeconds": 74.45,
+    "audioPreserved": true,
+    "decoded": true,
+    "faststart": true
+  },
+  {
+    "original": "dist/assets/videos/golden-fortune.mp4",
+    "mobile": "dist/assets/videos/mobile/golden-fortune-v1.mp4",
+    "originalBytes": 8044159,
+    "mobileBytes": 2931233,
+    "durationSeconds": 78.68,
+    "audioPreserved": true,
+    "decoded": true,
+    "faststart": true
+  },
+  {
+    "original": "dist/assets/videos/harshitha-heights.mp4",
+    "mobile": "dist/assets/videos/mobile/harshitha-heights-v1.mp4",
+    "originalBytes": 10010204,
+    "mobileBytes": 3377592,
+    "durationSeconds": 83.67,
+    "audioPreserved": true,
+    "decoded": true,
+    "faststart": true
+  },
+  {
+    "original": "dist/assets/videos/mvv-demo-home-tour.mp4",
+    "mobile": "dist/assets/videos/mobile/mvv-demo-home-tour-v1.mp4",
+    "originalBytes": 12031687,
+    "mobileBytes": 5022337,
+    "durationSeconds": 88.06,
+    "audioPreserved": true,
+    "decoded": true,
+    "faststart": true
+  },
+  {
+    "original": "dist/assets/videos/mvv-gv-grand-1.mp4",
+    "mobile": "dist/assets/videos/mobile/mvv-gv-grand-1-v1.mp4",
+    "originalBytes": 9231153,
+    "mobileBytes": 2978795,
+    "durationSeconds": 69.25,
+    "audioPreserved": true,
+    "decoded": true,
+    "faststart": true
+  },
+  {
+    "original": "dist/assets/videos/mvv-gv-grand.mp4",
+    "mobile": "dist/assets/videos/mobile/mvv-gv-grand-v1.mp4",
+    "originalBytes": 8204472,
+    "mobileBytes": 3318294,
+    "durationSeconds": 59.74,
+    "audioPreserved": true,
+    "decoded": true,
+    "faststart": true
+  },
+  {
+    "original": "dist/assets/videos/utkarsha-capital-towers.mp4",
+    "mobile": "dist/assets/videos/mobile/utkarsha-capital-towers-v1.mp4",
+    "originalBytes": 11674933,
+    "mobileBytes": 3868125,
+    "durationSeconds": 114.5,
+    "audioPreserved": true,
+    "decoded": true,
+    "faststart": true
+  },
+  {
+    "original": "dist/assets/videos/vaisakhi-west-winds.mp4",
+    "mobile": "dist/assets/videos/mobile/vaisakhi-west-winds-v1.mp4",
+    "originalBytes": 13031951,
+    "mobileBytes": 5543315,
+    "durationSeconds": 140.5,
+    "audioPreserved": true,
+    "decoded": true,
+    "faststart": true
+  }
+]

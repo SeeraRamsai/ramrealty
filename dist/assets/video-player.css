@@ -60,3 +60,14 @@
 .video-status a {
   color: #d8b66a;
 }
+
+.video-tools{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin:10px 0 0;color:#d0c9be;font:12px/1.5 system-ui,sans-serif}
+.video-tools label{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.video-tools select,.video-release-button{max-width:100%;border:1px solid #6f6041;border-radius:5px;background:#11100e;color:#f5f0e6;padding:9px;font:inherit;min-height:42px}
+.video-release-button{cursor:pointer}.video-release-button[hidden]{display:none}
+.video-player>video[hidden],.video-player>.video-load-button[hidden],.video-player>img[hidden]{display:none}
+@media(max-width:640px){.video-tools select{font-size:16px}}
+
+/* Portrait footage uses the available screen height after activation. */
+.video-player:has(>video){aspect-ratio:auto;min-height:180px}
+.video-player>video{height:auto;max-height:min(72vh,680px);min-height:180px}

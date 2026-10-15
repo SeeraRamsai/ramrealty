@@ -28,7 +28,7 @@ for p in root.rglob('*.html'):
     check(f.exists(),f'missing responsive asset {parts[0]}')
     if len(parts)>1:descriptors.append(parts[1])
    check(len(descriptors)==len(set(descriptors)),f'duplicate {responsive_attr} descriptors')
-  for key in ('href','src','data-src'):
+  for key in ('href','src','data-src','data-original-src'):
    u=a.get(key,'');v=urlsplit(u)
    if v.scheme or v.netloc or not u:continue
    if v.path:

@@ -66,7 +66,7 @@ All four property landing pages include a static HTML Netlify form named `proper
 Submissions are stored by Netlify, not written directly into Google Sheets. To use them in Sheets, export the form submissions as a CSV from the Netlify dashboard and import that CSV into Google Sheets.
 
 
-The project pages include Ram Realty owner-share details, downloadable posters and video walkthroughs. Supplied official brochures and floor/building plans are published under `dist/assets/documents/` and linked from the matching project page. The `/videos/` page contains 12 supplied property clips. Posters load lazily, and each MP4 source is added only after a visitor chooses to load its player; native controls then require an explicit play action. Pricing, area basis, possession/status, charges and RERA details should be reconfirmed against current project records.
+The project pages include Ram Realty owner-share details, downloadable posters and video walkthroughs. Supplied official brochures and floor/building plans are published under `dist/assets/documents/` and linked from the matching project page. The `/videos/` page contains 12 supplied property clips. Posters load lazily, and each MP4 source is attached only after a visitor presses Play walkthrough. Pricing, area basis, possession/status, charges and RERA details should be reconfirmed against current project records.
 
 
 ## Validate before deployment
@@ -83,3 +83,10 @@ After deploying, verify each enquiry form in Netlify and check the sitemap and p
 The homepage uses responsive WebP sources with legacy fallbacks. Four project pages include AI-generated concept illustration banners with accessible HTML descriptions and explicit illustrative labels. These banners do not establish the actual building design, views or amenities. Banner masters and prompts are documented in `artwork/project-banners/README.md`; only compressed web derivatives are deployed. `tools/optimize-images.cjs` recreates derivatives when Sharp and the local masters are available.
 
 A server-rendered, collapsible homepage table compares the four listings by area basis, status, quoted rate and listed charges. Update it alongside project pages when confirmed inventory information changes. Netlify-only enquiry reporting is documented in `ENQUIRY_REPORTING.md`; no analytics SDK or click-tracking endpoint has been added.
+
+
+## Low-data walkthrough playback
+
+Walkthroughs default to separate data-saver MP4s, with original quality still selectable. The player attaches a media source only after an explicit Play action, keeps at most one player loaded, and releases the media source when closed, far offscreen, on page hide or when switching quality. Portrait footage uses a taller active player on phones. No autoplay occurs on initial page load.
+
+See `VIDEO_OPTIMIZATION.md` for the encoding profile, regeneration commands and tradeoffs. Run `node tools/test-video-player.mjs` after changing player behavior. The original videos remain available and are not overwritten by optimization.
