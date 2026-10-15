@@ -73,6 +73,6 @@ The project pages include Ram Realty owner-share details, downloadable posters a
 
 Run `python tools/audit_site.py`, `node tools/test-enquiry.mjs`, and `git diff --check` before pushing. The enquiry test uses a local HTTP receiver and DOM stubs; it does not submit real leads or verify Netlify notification delivery. Generated test reports are written to `audit-results/` and should remain local.
 
-Shared accessibility styling is in `dist/assets/site-accessibility.css`. The displayed logo and selected homepage artwork use smaller derivatives; original artwork remains available. `netlify.toml` configures response headers and one-day revalidated caching for assets. The custom `404.html` is served by Netlify for missing pages.
+Shared accessibility styling is in `dist/assets/site-accessibility.css`. The displayed logo and selected homepage artwork use smaller derivatives; original artwork remains available. `dist/_headers` configures response headers and one-day revalidated caching for assets; `netlify.toml` sets the publish directory. The custom `404.html` is served by Netlify for missing pages.
 
 After deploying, verify each enquiry form in Netlify and check the sitemap and production response headers. Search Console verification is configured in DNS, so no ownership token is embedded in this repository.
