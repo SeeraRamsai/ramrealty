@@ -1,0 +1,17 @@
+.form-status {
+  margin: 12px 0 0;
+  padding: 12px;
+  border: 1px solid rgba(216, 182, 106, 0.45);
+  border-radius: 6px;
+  color: #f5f0e6;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.form-status a {
+  color: #d8b66a;
+}
+
+.form-status[hidden] {
+  display: none;
+}

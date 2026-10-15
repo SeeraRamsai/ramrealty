@@ -46,7 +46,7 @@ Then open <http://localhost:8000>. A local static server can display the pages, 
 1. Deploy this project to Netlify, either by connecting its Git repository or by uploading the `dist` folder as a manual deploy.
 2. In the Netlify site settings, enable **Form detection** if it is not already enabled.
 3. Deploy or redeploy the site so Netlify can scan the HTML form.
-4. Submit a test enquiry from the deployed `/mvv-gv-grand/` page and one of the new project pages.
+4. After deploying to a non-production preview, submit a test enquiry from `/mvv-gv-grand/` and one other project page.
 5. In the Netlify dashboard, open **Forms** and confirm the `property-enquiry` form and test submission appear.
 
 The site is static, so no build command is needed. The publish directory is set to `dist` in `netlify.toml`.
@@ -59,11 +59,11 @@ Search engines do not use the legacy `meta keywords` tag for ranking, so search 
 
 ## Enquiry submissions
 
-The MVV–GV Grand and new project enquiry forms use Netlify Forms with the shared name `property-enquiry`; each includes the property name so submissions can be identified. The MVV page collects the visitor's name, phone number, budget, preferred area, and buying timeline. The new project pages collect name and phone, with optional layout and buying timeline preferences. Successful submissions redirect to `/thank-you.html`; forms include a honeypot to help reduce spam. The MVV page also has custom JavaScript for duplicate-submit prevention and retry messaging.
+All four project enquiry forms use Netlify Forms with the shared name `property-enquiry` and include the property name so submissions can be identified. The MVV–GV Grand form collects name, phone, budget, preferred area and buying timeline. The other project forms collect name and phone, require a preferred layout and offer an optional buying timeline. The three non-MVV forms also attach available UTM campaign values and the referring page URL. All forms require contact consent and include a honeypot. With JavaScript enabled, submissions show an in-page confirmation or retry/contact message; without JavaScript, the Netlify form action redirects to `/thank-you.html`.
 
 All four property landing pages include a static HTML Netlify form named `property-enquiry`, with the property name, a honeypot, and a redirect to `/thank-you.html`. To receive submissions, sign in to the Netlify dashboard for the `ramrealty` site, open **Forms**, select **Enable form detection**, and deploy the site again. Netlify scans the deployed HTML for forms; the dashboard setting cannot be enabled from this repository. Email notifications are configured separately in the Netlify dashboard.
 
 Submissions are stored by Netlify, not written directly into Google Sheets. To use them in Sheets, export the form submissions as a CSV from the Netlify dashboard and import that CSV into Google Sheets.
 
 
-The project pages include Ram Realty owner-share details, downloadable posters and video walkthroughs. Supplied official brochures and floor/building plans are published under `dist/assets/documents/` and linked from the matching project page. The `/videos/` page contains the 11 supplied property clips with branded thumbnails and optimized MP4 versions. Pricing and availability should be reconfirmed against a current written cost sheet.
+The project pages include Ram Realty owner-share details, downloadable posters and video walkthroughs. Supplied official brochures and floor/building plans are published under `dist/assets/documents/` and linked from the matching project page. The `/videos/` page contains 12 supplied property clips. Posters load lazily, and each MP4 source is added only after a visitor chooses to load its player; native controls then require an explicit play action. Pricing, area basis, possession/status, charges and RERA details should be reconfirmed against current project records.
