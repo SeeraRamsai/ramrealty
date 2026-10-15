@@ -1,0 +1,5 @@
+.asset-tools/
+.venv/
+audit-results/
+artwork/project-banners/*.png
+Microsoft/Windows/PowerShell/

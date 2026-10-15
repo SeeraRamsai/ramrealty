@@ -1,0 +1,18 @@
+﻿/* Project banner content stays in HTML; images are illustrative and deferred. */
+.project-banner{position:relative;isolation:isolate;overflow:hidden;min-height:330px;margin:0 0 40px;border:1px solid rgba(216,182,106,.3);border-radius:12px;background:#11100e;color:#f5f0e6}
+.project-banner>img{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover;object-position:right center}
+.project-banner:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(17,16,14,.96),rgba(17,16,14,.78) 45%,rgba(17,16,14,.05))}
+.project-banner-copy{max-width:65%;padding:32px 32px 68px}
+.project-banner .banner-kicker{color:#e5c77f;font:700 10px/1.5 system-ui;letter-spacing:.15em;text-transform:uppercase;margin:0 0 12px}
+.project-banner h2{font:400 clamp(27px,3vw,38px)/1.12 Georgia,serif;margin:0 0 10px;color:#f5f0e6}
+.project-banner p{font-size:14px;line-height:1.65;margin:0 0 12px;color:#eee8de}
+.project-banner .banner-location,.project-banner .banner-status{color:#e5c77f;font-size:12px}
+.project-banner a{color:#f0d9a5;text-underline-offset:4px;font-size:12px}
+.project-banner .banner-disclosure{position:absolute;left:24px;right:24px;bottom:12px;margin:0;font:10px/1.5 system-ui;color:#e4ded3;background:rgba(17,16,14,.8);padding:6px 8px;border-radius:3px}
+.compare-section{padding:8px 0 58px}.compare-section h2{margin:12px 0 18px}.comparison-note{max-width:850px;color:#c9c3b9;font-size:13px;line-height:1.7}
+.comparison-details{border:1px solid rgba(216,182,106,.3);border-radius:8px;padding:18px 20px;background:#1a1814}
+.comparison-details summary{cursor:pointer;color:#e5c77f;font-size:15px;min-height:30px}.comparison-details[open] summary{margin-bottom:18px}
+.comparison-scroll{overflow-x:auto;max-width:100%;overscroll-behavior-x:contain}.comparison-scroll table{border-collapse:collapse;min-width:900px;width:100%;font-size:13px;line-height:1.6}.comparison-scroll caption{text-align:left;color:#b9b3a8;font-size:12px;padding:0 0 15px}.comparison-scroll th,.comparison-scroll td{text-align:left;vertical-align:top;padding:15px 13px;border-bottom:1px solid #39352e}.comparison-scroll thead th{color:#e5c77f;font-weight:600}.comparison-scroll tbody th{min-width:170px;color:#f5f0e6;font-family:Georgia,serif;font-size:17px}.comparison-scroll td{color:#d0c9be;min-width:150px}.comparison-scroll a{text-underline-offset:4px}
+@media(max-width:640px){.project-banner{min-height:350px}.project-banner-copy{max-width:100%;padding:25px 22px 88px}.project-banner>img{opacity:.5;object-position:65% center}.project-banner:before{background:linear-gradient(90deg,rgba(17,16,14,.95),rgba(17,16,14,.55))}.project-banner .banner-disclosure{left:16px;right:16px}.project-banner p{font-size:13px}.comparison-details{padding:16px}.compare-section{padding-bottom:40px}}
+
+main:not(.wrap)>.project-banner{width:min(1120px,calc(100% - 40px));margin-inline:auto}.project-banner h2{scroll-margin-top:100px}

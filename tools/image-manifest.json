@@ -1,0 +1,134 @@
+{
+  "utkarsha-home-hero": [
+    {
+      "file": "assets/responsive/utkarsha-home-hero-480.webp",
+      "width": 480,
+      "height": 600,
+      "bytes": 46810
+    },
+    {
+      "file": "assets/responsive/utkarsha-home-hero-800.webp",
+      "width": 800,
+      "height": 1000,
+      "bytes": 103100
+    },
+    {
+      "file": "assets/responsive/utkarsha-home-hero-1200.webp",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 163132
+    }
+  ],
+  "maple-woods-home-card": [
+    {
+      "file": "assets/responsive/maple-woods-home-card-400.webp",
+      "width": 400,
+      "height": 500,
+      "bytes": 40638
+    },
+    {
+      "file": "assets/responsive/maple-woods-home-card-800.webp",
+      "width": 800,
+      "height": 1000,
+      "bytes": 121548
+    }
+  ],
+  "mvv-grand-display": [
+    {
+      "file": "assets/responsive/mvv-grand-display-400.webp",
+      "width": 400,
+      "height": 400,
+      "bytes": 37800
+    },
+    {
+      "file": "assets/responsive/mvv-grand-display-800.webp",
+      "width": 800,
+      "height": 800,
+      "bytes": 114112
+    }
+  ],
+  "west-winds-project": [
+    {
+      "file": "assets/responsive/west-winds-project-480.webp",
+      "width": 480,
+      "height": 270,
+      "bytes": 16022
+    },
+    {
+      "file": "assets/responsive/west-winds-project-960.webp",
+      "width": 960,
+      "height": 540,
+      "bytes": 39914
+    }
+  ],
+  "utkarsha-project": [
+    {
+      "file": "assets/responsive/utkarsha-project-480.webp",
+      "width": 434,
+      "height": 289,
+      "bytes": 20578
+    },
+    {
+      "file": "assets/responsive/utkarsha-project-960.webp",
+      "width": 434,
+      "height": 289,
+      "bytes": 20578
+    }
+  ],
+  "mvv-gv-grand-banner": [
+    {
+      "file": "assets/responsive/mvv-gv-grand-banner-640.webp",
+      "width": 640,
+      "height": 427,
+      "bytes": 21988
+    },
+    {
+      "file": "assets/responsive/mvv-gv-grand-banner-1280.webp",
+      "width": 1280,
+      "height": 853,
+      "bytes": 85840
+    }
+  ],
+  "vaisakhi-west-winds-banner": [
+    {
+      "file": "assets/responsive/vaisakhi-west-winds-banner-640.webp",
+      "width": 640,
+      "height": 427,
+      "bytes": 25580
+    },
+    {
+      "file": "assets/responsive/vaisakhi-west-winds-banner-1280.webp",
+      "width": 1280,
+      "height": 853,
+      "bytes": 105278
+    }
+  ],
+  "a-square-maple-woods-banner": [
+    {
+      "file": "assets/responsive/a-square-maple-woods-banner-640.webp",
+      "width": 640,
+      "height": 427,
+      "bytes": 25896
+    },
+    {
+      "file": "assets/responsive/a-square-maple-woods-banner-1280.webp",
+      "width": 1280,
+      "height": 853,
+      "bytes": 87616
+    }
+  ],
+  "utkarsha-capital-towers-banner": [
+    {
+      "file": "assets/responsive/utkarsha-capital-towers-banner-640.webp",
+      "width": 640,
+      "height": 427,
+      "bytes": 19538
+    },
+    {
+      "file": "assets/responsive/utkarsha-capital-towers-banner-1280.webp",
+      "width": 1280,
+      "height": 853,
+      "bytes": 70606
+    }
+  ]
+}

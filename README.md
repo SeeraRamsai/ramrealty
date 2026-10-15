@@ -76,3 +76,10 @@ Run `python tools/audit_site.py`, `node tools/test-enquiry.mjs`, and `git diff -
 Shared accessibility styling is in `dist/assets/site-accessibility.css`. The displayed logo and selected homepage artwork use smaller derivatives; original artwork remains available. `dist/_headers` configures response headers and one-day revalidated caching for assets; `netlify.toml` sets the publish directory. The custom `404.html` is served by Netlify for missing pages.
 
 After deploying, verify each enquiry form in Netlify and check the sitemap and production response headers. Search Console verification is configured in DNS, so no ownership token is embedded in this repository.
+
+
+## Responsive images and project banners
+
+The homepage uses responsive WebP sources with legacy fallbacks. Four project pages include AI-generated concept illustration banners with accessible HTML descriptions and explicit illustrative labels. These banners do not establish the actual building design, views or amenities. Banner masters and prompts are documented in `artwork/project-banners/README.md`; only compressed web derivatives are deployed. `tools/optimize-images.cjs` recreates derivatives when Sharp and the local masters are available.
+
+A server-rendered, collapsible homepage table compares the four listings by area basis, status, quoted rate and listed charges. Update it alongside project pages when confirmed inventory information changes. Netlify-only enquiry reporting is documented in `ENQUIRY_REPORTING.md`; no analytics SDK or click-tracking endpoint has been added.

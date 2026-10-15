@@ -18,6 +18,16 @@ for p in root.rglob('*.html'):
  check(len(ids)==len(set(ids)),'unique IDs')
  for t,a in page.tags:
   if t=='img':check('alt' in a,'image alt')
+  for responsive_attr in ('srcset','imagesrcset'):
+   if responsive_attr not in a:continue
+   descriptors=[]
+   for candidate in a.get(responsive_attr,'').split(','):
+    parts=candidate.strip().split()
+    if not parts:continue
+    v=urlsplit(parts[0]);f=root/unquote(v.path.lstrip('/')) if v.path.startswith('/') else p.parent/unquote(v.path)
+    check(f.exists(),f'missing responsive asset {parts[0]}')
+    if len(parts)>1:descriptors.append(parts[1])
+   check(len(descriptors)==len(set(descriptors)),f'duplicate {responsive_attr} descriptors')
   for key in ('href','src','data-src'):
    u=a.get(key,'');v=urlsplit(u)
    if v.scheme or v.netloc or not u:continue
