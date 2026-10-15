@@ -16,8 +16,8 @@ for(const slug of ['mvv-gv-grand','vaisakhi-west-winds','a-square-maple-woods','
  const property=html.match(/name="property" value="([^"]+)"/)[1];
  const button=element();button.disabled=false;
  const data={'form-name':'property-enquiry',property,name:'AUDIT TEST - local only',phone:'9999999999',contact_consent:'yes'};
- const form={dataset:{},reportValidity:()=>true,querySelector:()=>button,addEventListener(type,fn){this.submit=fn}};
- const document={querySelectorAll:()=>[form],createElement:()=>element(),createTextNode:text=>({textContent:text})};
+ const form={dataset:{},reportValidity:()=>true,querySelector:(selector)=>selector.includes("form-name") ? {value:"property-enquiry"} : button,addEventListener(type,fn){this.submit=fn}};
+ const document={querySelectorAll:(selector)=>selector === "form" ? [form] : [],createElement:()=>element(),createTextNode:text=>({textContent:text})};
  class LocalFormData{constructor(){return Object.entries(data)}}
  vm.runInNewContext(source,{document,FormData:LocalFormData,URLSearchParams,fetch:(path,opts)=>fetch(base+path,opts),console:{error(){}}});
  const event={preventDefault(){}};

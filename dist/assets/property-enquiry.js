@@ -1,4 +1,5 @@
-document.querySelectorAll("form[data-netlify='true']").forEach((form) => {
+document.querySelectorAll("form").forEach((form) => {
+  if (!form.querySelector("input[name='form-name'][value='property-enquiry']")) return;
   const submitButton = form.querySelector("[type='submit']");
   const status = document.createElement("p");
 
