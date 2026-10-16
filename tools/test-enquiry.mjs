@@ -13,6 +13,10 @@ function element(){return {hidden:true,textContent:'',children:[],setAttribute()
 try{
 for(const slug of ['mvv-gv-grand','vaisakhi-west-winds','a-square-maple-woods','utkarsha-capital-towers']){
  const html=readFileSync(`dist/${slug}/index.html`,'utf8');
+ assert.match(html,/<form[^>]*name="property-enquiry"[^>]*method="POST"[^>]*data-netlify="true"[^>]*netlify-honeypot="bot-field"/);
+ assert.match(html,/name="form-name" value="property-enquiry"/);
+ assert.match(html,/name="contact_consent"/);
+ assert.match(html,/href="\/privacy.html"/);
  const property=html.match(/name="property" value="([^"]+)"/)[1];
  const button=element();button.disabled=false;
  const data={'form-name':'property-enquiry',property,name:'AUDIT TEST - local only',phone:'9999999999',contact_consent:'yes'};
@@ -21,11 +25,12 @@ for(const slug of ['mvv-gv-grand','vaisakhi-west-winds','a-square-maple-woods','
  class LocalFormData{constructor(){return Object.entries(data)}}
  vm.runInNewContext(source,{document,FormData:LocalFormData,URLSearchParams,fetch:(path,opts)=>fetch(base+path,opts),console:{error(){}}});
  const event={preventDefault(){}};
+ const beforeInvalid=received.length;form.reportValidity=()=>false;await form.submit(event);assert.equal(received.length,beforeInvalid);assert.equal(button.disabled,false);form.reportValidity=()=>true;
  responseCode=500;await form.submit(event);assert.equal(button.disabled,false);assert.equal(form.dataset.submitting,'false');assert.ok(button.status.children.some(x=>x.href==='tel:+917799251808'));
  responseCode=200;const pending=form.submit(event);await form.submit(event);await pending;
- assert.equal(button.disabled,true);assert.equal(button.textContent,'Enquiry sent');
+ assert.equal(button.disabled,true);assert.equal(button.textContent,'Receipt unconfirmed');assert.ok(button.status.children.some(x=>/could not confirm receipt/.test(x.textContent)));assert.ok(!button.status.children.some(x=>/enquiry has been sent/.test(x.textContent)));
  const messages=received.slice(-2);assert.equal(messages.length,2);for(const message of messages){assert.equal(message.path,'/');assert.equal(message.method,'POST');assert.deepEqual(message.fields,data)}
- results.push({project:slug,success:true,errorAndRetry:true,duplicatePrevented:true,payloadPreserved:true});
+ results.push({project:slug,registrationMarkup:true,invalidFormNotPosted:true,unrelated200DoesNotClaimDelivery:true,errorAndRetry:true,duplicatePrevented:true,payloadPreserved:true});
 }
 writeFileSync('audit-results/form-local-tests.json',JSON.stringify({scope:'Local HTTP receiver with DOM stubs; does not verify browser interaction or Netlify delivery',requests:received.length,results},null,2));
 console.log(JSON.stringify({requests:received.length,results},null,2));

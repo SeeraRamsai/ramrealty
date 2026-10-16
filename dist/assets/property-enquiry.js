@@ -39,9 +39,17 @@ document.querySelectorAll("form").forEach((form) => {
         throw new Error(`Enquiry submission failed with HTTP ${response.status}.`);
       }
 
-      submitButton.textContent = "Enquiry sent";
-      status.textContent =
-        "Your enquiry has been sent. Ram Realty will follow up about this property.";
+      // Netlify AJAX responses do not expose a durable submission receipt.
+      // A 2xx response alone can also be an unrelated static page. Do not claim delivery.
+      submitButton.textContent = "Receipt unconfirmed";
+      status.replaceChildren(document.createTextNode(
+        "Your request completed, but we could not confirm receipt. It may have arrived. Please call ",
+      ));
+      const phone = document.createElement("a");
+      phone.href = "tel:+917799251808";
+      phone.textContent = "+91 77992 51808";
+      status.append(phone);
+      status.append(document.createTextNode(" to check before submitting again."));
     } catch (error) {
       console.error("Enquiry submission failed.", error);
       status.replaceChildren(

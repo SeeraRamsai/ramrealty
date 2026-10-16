@@ -1,0 +1,13 @@
+{
+  "enabled": false,
+  "provider": "netlify-only",
+  "ga4MeasurementId": null,
+  "gtmContainerId": null,
+  "metaPixelId": null,
+  "events": [
+    "enquiry_request_completed",
+    "whatsapp_click",
+    "phone_click"
+  ],
+  "note": "Preparation only: this file is outside the publish directory and no loader consumes it. Enquiry request completion must never be labelled a stored lead. Configure consent and review privacy notice before implementing any third-party events. Never put API secrets or customer data here."
+}
