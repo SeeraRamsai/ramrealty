@@ -31,6 +31,8 @@ A static property website for Ram Realty, featuring a Visakhapatnam property col
 
 `netlify.toml` configures Netlify to publish the `dist` directory.
 
+Canonical redirects are also included in `dist/_redirects` so direct publish-folder deployments retain the `/about`, `/faq` and `/privacy` aliases to their existing `.html` URLs. Keep those rules in agreement with `netlify.toml`; after an authorized release, verify the hosted 301 responses, final 200 destinations and genuine missing-page 404. Sitemap `lastmod` values record meaningful page-content updates, not audit or deployment dates.
+
 ## Preview locally
 
 With Python installed, run this from the project root:
@@ -73,7 +75,9 @@ The project pages include Ram Realty owner-share details, downloadable posters a
 
 ## Validate before deployment
 
-Run `python tools/audit_site.py`, `node tools/test-enquiry.mjs`, and `git diff --check` before pushing. The enquiry test uses a local HTTP receiver and DOM stubs; it does not submit real leads or verify Netlify notification delivery. Generated test reports are written to `audit-results/` and should remain local.
+After editing shared stylesheets, run `python tools/inline-page-styles.py`. The small stylesheets are embedded in their original cascade order, removing first-render CSS requests without a runtime loader. CSS files remain the editable source; generated HTML is committed, so Netlify still needs no build step. The generator rejects CSS imports/asset URLs that need separate resolution rather than silently changing their destinations.
+
+Before pushing, run `python tools/inline-page-styles.py --check`, `python tools/audit_site.py`, `python tools/check-project-seo.py`, `python tools/check-listing-consistency.py`, `node tools/test-enquiry.mjs`, `node tools/test-video-player.mjs`, and `git diff --check`. The enquiry test uses a local HTTP receiver and DOM stubs; it does not submit real leads or verify Netlify notification delivery. Generated test reports are written to `audit-results/` and should remain local.
 
 Shared accessibility styling is in `dist/assets/site-accessibility.css`. The displayed logo and selected homepage artwork use smaller derivatives; original artwork remains available. `dist/_headers` configures response headers and one-day revalidated caching for assets; `netlify.toml` sets the publish directory. The custom `404.html` is served by Netlify for missing pages.
 

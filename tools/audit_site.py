@@ -1,5 +1,6 @@
 ﻿from pathlib import Path
 from html.parser import HTMLParser
+from datetime import date
 from urllib.parse import urlsplit,unquote
 import json,re,xml.etree.ElementTree as ET,tomllib
 root=Path('dist'); errors=[];checks=0
@@ -28,7 +29,7 @@ for p in root.rglob('*.html'):
     check(f.exists(),f'missing responsive asset {parts[0]}')
     if len(parts)>1:descriptors.append(parts[1])
    check(len(descriptors)==len(set(descriptors)),f'duplicate {responsive_attr} descriptors')
-  for key in ('href','src','data-src','data-original-src'):
+  for key in ('href','src','data-src','data-original-src','data-inline-stylesheet'):
    u=a.get(key,'');v=urlsplit(u)
    if v.scheme or v.netloc or not u:continue
    if v.path:
@@ -76,8 +77,27 @@ for loc in sitemap.findall('.//{http://www.sitemaps.org/schemas/sitemap/0.9}loc'
  title=re.search(r'<title>(.*?)</title>',target.read_text(encoding='utf-8'),re.S)
  check(bool(title and title.group(1).strip()),f'missing title {u}')
  if title:titles.append(title.group(1))
+for entry in sitemap.getroot():
+ lastmod=entry.find('{http://www.sitemaps.org/schemas/sitemap/0.9}lastmod')
+ try:
+  modified=date.fromisoformat(lastmod.text if lastmod is not None else '')
+  check(modified<=date.today(),'future sitemap lastmod')
+ except (ValueError,TypeError):check(False,'missing or invalid sitemap lastmod date')
 check(len(titles)==len(set(titles)),'duplicate sitemap page titles')
 redirects={r['from']:r['to'] for r in config.get('redirects',[])}
+runtime_redirects={}
+for line in (root/'_redirects').read_text(encoding='utf-8').splitlines():
+ line=line.strip()
+ if not line or line.startswith('#'):continue
+ parts=line.split()
+ check(len(parts)==3,f'invalid runtime redirect {line}')
+ if len(parts)!=3:continue
+ start,target,status=parts
+ check(status=='301!',f'canonical redirect must be forced and permanent: {start}')
+ check(start not in runtime_redirects,f'duplicate runtime redirect {start}')
+ runtime_redirects[start]=target
+check(runtime_redirects==redirects,'publish-directory redirects differ from netlify.toml')
+check(not any('*' in start for start in runtime_redirects),'no catch-all rewrite hiding missing pages')
 for start,target in redirects.items():
  seen=set();current=start
  while current in redirects and current not in seen:seen.add(current);current=redirects[current]

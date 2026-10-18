@@ -157,7 +157,139 @@
       .sticky-cta .button{width:100%}
     }
   </style>
-<link rel="stylesheet" href="../assets/video-player.css?v=3"><script src="../assets/video-player.js?v=2" defer></script><link rel="stylesheet" href="../assets/property-enquiry.css"><script src="../assets/property-enquiry.js?v=3" defer></script><link rel="stylesheet" href="/assets/site-accessibility.css?v=3"><link rel="icon" type="image/png" href="/assets/ram-realty-logo-small.png"><link rel="stylesheet" href="/assets/project-hero-v1.css"></head>
+<style data-inline-stylesheet="/assets/video-player.css">
+.video-player {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #080807;
+}
+
+.video-player img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.video-load-button {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 16px;
+  border: 1px solid #d8b66a;
+  border-radius: 999px;
+  background: #11100e;
+  color: #f5f0e6;
+  font: inherit;
+  cursor: pointer;
+}
+
+.video-load-button:focus-visible {
+  outline: 3px solid #f5f0e6;
+  outline-offset: 3px;
+}
+
+.video-player > video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: 680px;
+  object-fit: contain;
+  background: #080807;
+}
+
+.video-status {
+  position: absolute;
+  z-index: 2;
+  inset: auto 8px 8px;
+  margin: 0;
+  padding: 8px 10px;
+  background: #11100e;
+  color: #f5f0e6;
+  font-size: 13px;
+}
+
+.video-status a {
+  color: #d8b66a;
+}
+
+.video-tools{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin:10px 0 0;color:#d0c9be;font:12px/1.5 system-ui,sans-serif}
+.video-tools label{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.video-tools select,.video-release-button{max-width:100%;border:1px solid #6f6041;border-radius:5px;background:#11100e;color:#f5f0e6;padding:9px;font:inherit;min-height:42px}
+.video-release-button{cursor:pointer}.video-release-button[hidden]{display:none}
+.video-player>video[hidden],.video-player>.video-load-button[hidden],.video-player img[hidden]{display:none}
+@media(max-width:640px){.video-tools select{font-size:16px}}
+
+/* Portrait footage uses the available screen height after activation. */
+.video-player:has(>video){aspect-ratio:auto;min-height:180px}
+.video-player>video{height:auto;max-height:min(72vh,680px);min-height:180px}
+</style><script src="../assets/video-player.js?v=2" defer></script><style data-inline-stylesheet="/assets/property-enquiry.css">
+.form-status {
+  margin: 12px 0 0;
+  padding: 12px;
+  border: 1px solid rgba(216, 182, 106, 0.45);
+  border-radius: 6px;
+  color: #f5f0e6;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.form-status a {
+  color: #d8b66a;
+}
+
+.form-status[hidden] {
+  display: none;
+}
+</style><script src="../assets/property-enquiry.js?v=3" defer></script><style data-inline-stylesheet="/assets/site-accessibility.css">
+/* Shared keyboard, motion and small-screen improvements. */
+.skip-link{position:fixed;top:8px;left:8px;z-index:1000;padding:12px 18px;background:#f5f0e6;color:#11100e;transform:translateY(-180%)}
+.skip-link:focus{transform:none}
+:focus-visible{outline:3px solid #e5c77f;outline-offset:4px}
+html{scroll-padding-bottom:100px}
+main{scroll-margin-top:16px}
+a,button,input,select{touch-action:manipulation}
+/* Discrete navigation/contact links stay easy to operate by touch. */
+footer a,.navlinks a,.hero-actions>a[href^="tel:"]{display:inline-flex;align-items:center;min-height:44px}
+footer>p{width:min(1120px,calc(100% - 40px));margin-inline:auto}
+.property-breadcrumb{width:min(1120px,calc(100% - 40px));margin:16px auto 0;font-size:13px;color:#d0c9be}
+.property-breadcrumb ol{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;list-style:none;margin:0;padding:0}
+.property-breadcrumb li+li::before{content:'/';margin-right:12px;color:#b9b3a8}
+.property-breadcrumb a{display:inline-flex;align-items:center;min-height:44px;color:#d8b66a}
+.listing-review{width:min(1120px,calc(100% - 40px));margin:0 auto 32px;color:#b9b3a8;font-size:13px;line-height:1.6}
+@media(max-width:640px){.topbar:has(.nav){height:auto;min-height:72px;flex-wrap:wrap;gap:14px;padding-block:16px}.nav{flex-wrap:wrap;gap:14px}.nav a:not(.nav-cta){display:inline-flex;align-items:center;min-height:44px}.nav a{min-height:44px}.top-actions .pill{min-height:44px}.fields input,.fields select{font-size:16px}.sticky~*{scroll-margin-bottom:100px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation:none!important;transition:none!important}}
+</style><link rel="icon" type="image/png" href="/assets/ram-realty-logo-small.png"><style data-inline-stylesheet="/assets/project-hero-v1.css">
+/* Project-specific concept art; factual listing details remain selectable HTML. */
+.project-concept{margin:0;min-width:0;align-self:center}
+.concept-scene{position:relative;isolation:isolate;overflow:hidden;aspect-ratio:5/4;border:1px solid #74623e;border-radius:14px;background:#181a1b}
+.concept-scene::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(180deg,rgba(10,12,14,.22),transparent 35%,rgba(10,12,14,.24) 60%,rgba(10,12,14,.94))}
+.concept-scene picture{display:block;width:100%;height:100%}
+.hero .concept-scene img{display:block;width:100%;height:100%;aspect-ratio:auto;object-fit:cover;object-position:75% center;border:0;border-radius:0}
+.concept-mark{position:absolute;z-index:1;top:18px;left:18px;padding:7px 10px;border:1px solid rgba(232,207,151,.6);border-radius:99px;background:rgba(17,16,14,.87);color:#f2dab0;font:600 10px/1.4 system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase}
+.concept-copy{position:absolute;z-index:1;bottom:22px;left:24px;right:24px;color:#f5f0e6}
+.hero .concept-copy p{margin:0;max-width:none;color:inherit}
+.hero .concept-copy .concept-area{font:600 10px/1.6 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#f0d79e}
+.hero .concept-copy .concept-name{font:400 clamp(25px,2.6vw,38px)/1.12 Georgia,serif;margin:8px 0;letter-spacing:-.02em}
+.hero .concept-copy .concept-subtitle{font:13px/1.6 system-ui,sans-serif;color:#eee6d6}
+.concept-caption{padding:11px 2px 0;color:#b9b3a8;font:11px/1.6 system-ui,sans-serif}
+.concept-caption a{display:inline-flex;align-items:center;min-height:32px;color:#efd9aa;text-underline-offset:4px}
+.concept-mvv{--concept-accent:#7d9cbd}.concept-west-winds{--concept-accent:#b2b990}.concept-maple-woods{--concept-accent:#91ad88}.concept-capital-towers{--concept-accent:#8da4cf}
+.concept-scene{box-shadow:0 16px 45px rgba(0,0,0,.22);border-top:3px solid var(--concept-accent,#d8b66a)}
+.project-context{color:#c9c3b9;font:14px/1.7 system-ui,sans-serif;margin:20px 0 0}
+.project-context a{color:#efd9aa;text-underline-offset:4px}
+.hero .project-concept{grid-row:auto}
+@media(max-width:760px){.hero .project-concept{grid-row:1}.concept-scene{aspect-ratio:5/4}.concept-copy{left:20px;right:20px;bottom:20px}.hero .concept-copy .concept-name{font-size:28px}.concept-mark{top:14px;left:14px}}
+@media(max-width:360px){.concept-scene{aspect-ratio:1/1}.hero .concept-copy .concept-name{font-size:25px}.concept-copy{left:16px;right:16px;bottom:16px}.hero .concept-copy .concept-subtitle{font-size:12px}}
+</style></head>
 <body><a class="skip-link" href="#main-content">Skip to main content</a>
   <header class="wrap topbar">
     <a class="brand" href="../" aria-label="Ram Realty properties">

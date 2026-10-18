@@ -1,0 +1,5 @@
+# Keep these existing .html canonicals when deploying dist directly as well as via Git.
+# No catch-all rewrite: missing pages must retain a genuine 404 response.
+/about    /about.html    301!
+/faq      /faq.html      301!
+/privacy  /privacy.html  301!

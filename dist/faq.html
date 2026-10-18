@@ -41,7 +41,25 @@
     footer{border-top:1px solid rgba(255,255,255,.1);padding:22px 0;color:var(--muted);font-size:13px}
     @media(max-width:560px){nav{align-items:flex-start;flex-direction:column}.navlinks{flex-wrap:wrap;gap:12px}}
   </style>
-<link rel="stylesheet" href="/assets/site-accessibility.css?v=3"><link rel="icon" type="image/png" href="/assets/ram-realty-logo-small.png"></head>
+<style data-inline-stylesheet="/assets/site-accessibility.css">
+/* Shared keyboard, motion and small-screen improvements. */
+.skip-link{position:fixed;top:8px;left:8px;z-index:1000;padding:12px 18px;background:#f5f0e6;color:#11100e;transform:translateY(-180%)}
+.skip-link:focus{transform:none}
+:focus-visible{outline:3px solid #e5c77f;outline-offset:4px}
+html{scroll-padding-bottom:100px}
+main{scroll-margin-top:16px}
+a,button,input,select{touch-action:manipulation}
+/* Discrete navigation/contact links stay easy to operate by touch. */
+footer a,.navlinks a,.hero-actions>a[href^="tel:"]{display:inline-flex;align-items:center;min-height:44px}
+footer>p{width:min(1120px,calc(100% - 40px));margin-inline:auto}
+.property-breadcrumb{width:min(1120px,calc(100% - 40px));margin:16px auto 0;font-size:13px;color:#d0c9be}
+.property-breadcrumb ol{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;list-style:none;margin:0;padding:0}
+.property-breadcrumb li+li::before{content:'/';margin-right:12px;color:#b9b3a8}
+.property-breadcrumb a{display:inline-flex;align-items:center;min-height:44px;color:#d8b66a}
+.listing-review{width:min(1120px,calc(100% - 40px));margin:0 auto 32px;color:#b9b3a8;font-size:13px;line-height:1.6}
+@media(max-width:640px){.topbar:has(.nav){height:auto;min-height:72px;flex-wrap:wrap;gap:14px;padding-block:16px}.nav{flex-wrap:wrap;gap:14px}.nav a:not(.nav-cta){display:inline-flex;align-items:center;min-height:44px}.nav a{min-height:44px}.top-actions .pill{min-height:44px}.fields input,.fields select{font-size:16px}.sticky~*{scroll-margin-bottom:100px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation:none!important;transition:none!important}}
+</style><link rel="icon" type="image/png" href="/assets/ram-realty-logo-small.png"></head>
 <body><a class="skip-link" href="#main-content">Skip to main content</a>
   <header><nav class="wrap" aria-label="Main navigation"><a class="brand" href="/">RAM REALTY</a><div class="navlinks"><a href="/">Homes</a><a href="/faq.html" aria-current="page">FAQs</a><a href="/videos/">Walkthroughs</a><a href="/about.html">About</a></div></nav></header>
   <main id="main-content" tabindex="-1" class="wrap">

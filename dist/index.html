@@ -101,7 +101,32 @@
     @media(max-width:390px){.property-card{grid-template-columns:1fr}.property-image{height:210px;min-height:210px}.property-copy{min-height:205px}.hero-visual{min-height:290px}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
   </style>
-<link rel="stylesheet" href="/assets/site-accessibility.css?v=3"><link rel="icon" type="image/png" href="/assets/ram-realty-logo-small.png"><link rel="preload" as="image" fetchpriority="high" type="image/webp" href="/assets/responsive/utkarsha-capital-towers-banner-640.webp" imagesrcset="/assets/responsive/utkarsha-capital-towers-banner-640.webp 640w, /assets/responsive/utkarsha-capital-towers-banner-1280.webp 1280w" imagesizes="(max-width:640px) calc(100vw - 36px), (max-width:900px) 45vw, 600px"><link rel="stylesheet" href="/assets/site-enhancements-v1.css"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://ramrealty.in/#website","url":"https://ramrealty.in/","name":"Ram Realty"}</script></head>
+<style data-inline-stylesheet="/assets/site-accessibility.css">
+/* Shared keyboard, motion and small-screen improvements. */
+.skip-link{position:fixed;top:8px;left:8px;z-index:1000;padding:12px 18px;background:#f5f0e6;color:#11100e;transform:translateY(-180%)}
+.skip-link:focus{transform:none}
+:focus-visible{outline:3px solid #e5c77f;outline-offset:4px}
+html{scroll-padding-bottom:100px}
+main{scroll-margin-top:16px}
+a,button,input,select{touch-action:manipulation}
+/* Discrete navigation/contact links stay easy to operate by touch. */
+footer a,.navlinks a,.hero-actions>a[href^="tel:"]{display:inline-flex;align-items:center;min-height:44px}
+footer>p{width:min(1120px,calc(100% - 40px));margin-inline:auto}
+.property-breadcrumb{width:min(1120px,calc(100% - 40px));margin:16px auto 0;font-size:13px;color:#d0c9be}
+.property-breadcrumb ol{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;list-style:none;margin:0;padding:0}
+.property-breadcrumb li+li::before{content:'/';margin-right:12px;color:#b9b3a8}
+.property-breadcrumb a{display:inline-flex;align-items:center;min-height:44px;color:#d8b66a}
+.listing-review{width:min(1120px,calc(100% - 40px));margin:0 auto 32px;color:#b9b3a8;font-size:13px;line-height:1.6}
+@media(max-width:640px){.topbar:has(.nav){height:auto;min-height:72px;flex-wrap:wrap;gap:14px;padding-block:16px}.nav{flex-wrap:wrap;gap:14px}.nav a:not(.nav-cta){display:inline-flex;align-items:center;min-height:44px}.nav a{min-height:44px}.top-actions .pill{min-height:44px}.fields input,.fields select{font-size:16px}.sticky~*{scroll-margin-bottom:100px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation:none!important;transition:none!important}}
+</style><link rel="icon" type="image/png" href="/assets/ram-realty-logo-small.png"><link rel="preload" as="image" fetchpriority="high" type="image/webp" href="/assets/responsive/utkarsha-capital-towers-banner-640.webp" imagesrcset="/assets/responsive/utkarsha-capital-towers-banner-640.webp 640w, /assets/responsive/utkarsha-capital-towers-banner-1280.webp 1280w" imagesizes="(max-width:640px) calc(100vw - 36px), (max-width:900px) 45vw, 600px"><style data-inline-stylesheet="/assets/site-enhancements-v1.css">
+/* Homepage comparison styles. */
+.compare-section{padding:8px 0 58px}.compare-section h2{margin:12px 0 18px}.comparison-note{max-width:850px;color:#c9c3b9;font-size:13px;line-height:1.7}
+.comparison-details{border:1px solid rgba(216,182,106,.3);border-radius:8px;padding:18px 20px;background:#1a1814}
+.comparison-details summary{cursor:pointer;color:#e5c77f;font-size:15px;min-height:30px}.comparison-details[open] summary{margin-bottom:18px}
+.comparison-scroll{overflow-x:auto;max-width:100%;overscroll-behavior-x:contain}.comparison-scroll table{border-collapse:collapse;min-width:900px;width:100%;font-size:13px;line-height:1.6}.comparison-scroll caption{text-align:left;color:#b9b3a8;font-size:12px;padding:0 0 15px}.comparison-scroll th,.comparison-scroll td{text-align:left;vertical-align:top;padding:15px 13px;border-bottom:1px solid #39352e}.comparison-scroll thead th{color:#e5c77f;font-weight:600}.comparison-scroll tbody th{min-width:170px;color:#f5f0e6;font-family:Georgia,serif;font-size:17px}.comparison-scroll td{color:#d0c9be;min-width:150px}.comparison-scroll a{text-underline-offset:4px}
+@media(max-width:640px){.comparison-details{padding:16px}.compare-section{padding-bottom:40px}}
+</style><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://ramrealty.in/#website","url":"https://ramrealty.in/","name":"Ram Realty"}</script></head>
 <body><a class="skip-link" href="#main-content">Skip to main content</a>
   <header class="wrap topbar">
     <a class="brand" href="./" aria-label="Ram Realty home">
