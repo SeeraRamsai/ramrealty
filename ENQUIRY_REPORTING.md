@@ -10,7 +10,7 @@ The report prints counts by project and campaign and excludes names beginning AU
 
 Campaign fields are attached on all four project forms. The shared helper also runs on the homepage and indexable information/location pages, retaining the five supported UTM values in session storage for onward visits. Values are limited to 250 characters; blocked storage falls back to current-page parameters. Blank fields do not establish attribution. Never place personal information in UTM parameters.
 
-Call and WhatsApp clicks are not tracked by the current native Netlify analytics setup. GA4 or another configured event destination would be an additional setup. Do not infer click totals from form counts or email notifications. Search Console reports discovery/search traffic; it does not verify lead quality.
+For visitors who allow analytics, GA4 G-7DBBCTFPDT records phone_click, whatsapp_click and enquiry_submit_attempt with a public project identifier. These events do not contain typed enquiry values, phone numbers or WhatsApp text. A click is not a connected call or sent message; an attempt is not an accepted submission. Google tags stay blocked before consent and after rejection. Use Analytics choices in the footer to update the preference. Do not infer click totals from form counts or email notifications. Search Console reports discovery/search traffic; it does not verify lead quality.
 
 ## Receipt handling and local verification (16 October 2026)
 
@@ -24,4 +24,4 @@ Netlify Web Analytics and Real User Monitoring are enabled in the account. The c
 - [Real-user performance](https://app.netlify.com/projects/ramrealty/analytics-and-metrics/rum)
 - [Accepted enquiries](https://app.netlify.com/projects/ramrealty/forms)
 
-`config/measurement.json` documents verified account configuration outside the publish directory. It does not activate analytics itself. No GA4 account is available in the signed-in profile and no measurement ID has been supplied. No advertising pixels, session recording or custom contact-click events were enabled. See `OPERATIONS.md` for assessment and additional owner setup.
+`config/measurement.json` documents verified account configuration outside the publish directory. It does not activate analytics itself. The owner supplied GA4 ID G-7DBBCTFPDT after the native analytics setup. Its consent-gated website integration is configured; verify event receipt in the owning Google Analytics property, which is not accessible in the current signed-in profile. No advertising pixels or session recording are configured. See `OPERATIONS.md` for assessment and additional owner setup.

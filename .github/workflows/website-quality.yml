@@ -41,6 +41,7 @@ jobs:
           mkdir -p audit-results
           node tools/test-enquiry.mjs
           node tools/test-campaign-fields.mjs
+          node tools/test-analytics.mjs
           node tools/test-video-player.mjs
       - name: Save synthetic test results
         if: always()

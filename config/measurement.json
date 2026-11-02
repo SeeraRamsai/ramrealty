@@ -1,13 +1,32 @@
 {
   "enabled": true,
-  "provider": "netlify-web-analytics-and-rum",
+  "provider": "netlify-web-analytics-and-rum-plus-consented-ga4",
   "managedIn": "Netlify dashboard",
   "retentionDaysOnCurrentPlan": 1,
-  "ga4MeasurementId": null,
+  "ga4MeasurementId": "G-7DBBCTFPDT",
   "gtmContainerId": null,
   "metaPixelId": null,
-  "metrics": ["pageviews", "unique_visitors", "top_pages", "referral_sources", "missing_resources", "bandwidth", "LCP", "INP", "CLS"],
-  "events": [],
-  "untrackedEvents": ["phone_click", "whatsapp_click", "enquiry_request_completed"],
-  "note": "Records the account-side configuration verified on 2 November 2026; this file does not load tracking code or control account settings. Web Analytics uses Netlify server logs. RUM is injected by Netlify into production HTML. Enquiry counts come from accepted Netlify Forms submissions, not browser request completion. No GA4, GTM or advertising pixels are configured. Never store secrets or customer data here."
+  "metrics": [
+    "pageviews",
+    "unique_visitors",
+    "top_pages",
+    "referral_sources",
+    "missing_resources",
+    "bandwidth",
+    "LCP",
+    "INP",
+    "CLS"
+  ],
+  "events": [
+    "phone_click",
+    "whatsapp_click",
+    "enquiry_submit_attempt"
+  ],
+  "untrackedEvents": [
+    "enquiry_received",
+    "qualified_lead",
+    "sale"
+  ],
+  "note": "Netlify Web Analytics and RUM enabled in dashboard on 2 November 2026. GA4 ID supplied by owner; production Google tag loads only after opt-in. This descriptive file is outside dist and does not control settings. Event payloads contain only public project identifiers, never typed enquiry values. Counts do not establish connected calls, sent messages, stored leads or sales. GA4 property receipt/stream configuration requires owner-account verification.",
+  "consent": "Basic: Google tag blocked before opt-in and after rejection. Advertising storage/user data/personalization denied."
 }
