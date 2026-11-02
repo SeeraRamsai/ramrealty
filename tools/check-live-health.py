@@ -3,9 +3,11 @@ import argparse
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from html.parser import HTMLParser
+from http.client import HTTPException
 import json
 from pathlib import Path
-from urllib.error import HTTPError
+from time import sleep
+from urllib.error import HTTPError, URLError
 from urllib.parse import urljoin, urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 from urllib.robotparser import RobotFileParser
@@ -32,19 +34,24 @@ class Page(HTMLParser):
         self.tags.append((tag, dict(attributes)))
 
 def fetch(path):
-    try:
-        # A separate opener per worker avoids shared connection state.
-        opener = build_opener(NoRedirect)
+    # Retry only transport failures, never a returned HTTP/content error.
+    # Two 15-second attempts keep this bounded within the workflow timeout.
+    for attempt in range(1, 3):
         try:
-            response = opener.open(Request(base + path, headers={'User-Agent': 'RamRealty-HealthCheck/1.0'}), timeout=20)
-        except HTTPError as exc:
-            response = exc
-        with response:
-            return {'path': path, 'status': response.code,
-                    'headers': {k.lower(): v for k, v in response.headers.items()},
-                    'body': response.read().decode('utf8', errors='replace')}
-    except Exception as exc:
-        return {'path': path, 'error': str(exc)}
+            # A new opener per attempt avoids reusing a failed connection.
+            opener = build_opener(NoRedirect)
+            try:
+                response = opener.open(Request(base + path, headers={'User-Agent': 'RamRealty-HealthCheck/1.0'}), timeout=15)
+            except HTTPError as exc:
+                response = exc
+            with response:
+                return {'path': path, 'status': response.code, 'attempts': attempt,
+                        'headers': {k.lower(): v for k, v in response.headers.items()},
+                        'body': response.read().decode('utf8', errors='replace')}
+        except (URLError, HTTPException, OSError) as exc:
+            if attempt == 2:
+                return {'path': path, 'error': str(exc), 'attempts': attempt}
+            sleep(0.75)
 
 expected = [node.text for node in ET.parse('dist/sitemap.xml').findall('.//{http://www.sitemaps.org/schemas/sitemap/0.9}loc')]
 paths = [urlsplit(url).path for url in expected]
