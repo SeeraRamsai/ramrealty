@@ -83,6 +83,8 @@ Run `python tools/check-crawlability.py` to verify that every sitemap page is re
 
 `python tools/run-performance-review.py` measures the homepage and MVV project on mobile and desktop sequentially. Both audit runners accept `--output-dir` and `--base-url`; the accessibility runner also accepts `--paths` for verifying a targeted fix. Keep performance runs separate from other audit processes to avoid test contention.
 
+The coastal editorial palette combines deep navy heroes/navigation, sea-glass and sandstone surfaces, warm gold accents and serif display headings. The homepage uses a featured listing above three smaller property cards on desktop, with a single-column reading order on phones. Gradients and decorative shapes use CSS, without new image downloads or animation libraries.
+
 The current visual system is authored in `dist/assets/modern-realty.css` and embedded last by the stylesheet generator. Location guides are under `/locations/madhuravada/`, `/locations/pm-palem/`, `/locations/yendada/` and `/locations/kommadi/`. Maintain their individual canonical URLs, visible locality distinctions, map-search links and sitemap entries. Search spelling aliases do not establish current inventory within a locality.
 
 Shared accessibility styling is in `dist/assets/site-accessibility.css`. The displayed logo and selected homepage artwork use smaller derivatives; original artwork remains available. `dist/_headers` configures response headers and one-day revalidated caching for assets; `netlify.toml` sets the publish directory. The custom `404.html` is served by Netlify for missing pages.
