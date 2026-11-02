@@ -22,3 +22,9 @@
   to = "/privacy.html"
   status = 301
   force = true
+
+[[redirects]]
+  from = "/favicon.ico"
+  to = "/assets/ram-realty-logo-small.png"
+  status = 301
+  force = true

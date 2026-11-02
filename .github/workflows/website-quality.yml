@@ -1,0 +1,51 @@
+name: Website quality
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: website-quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - name: Check static pages, SEO and crawl discovery
+        run: |
+          python tools/inline-page-styles.py --check
+          python tools/audit_site.py
+          python tools/check-project-seo.py
+          python tools/check-listing-consistency.py
+          python tools/check-crawlability.py
+      - name: Check enquiries, attribution and video lifecycle locally
+        run: |
+          mkdir -p audit-results
+          node tools/test-enquiry.mjs
+          node tools/test-campaign-fields.mjs
+          node tools/test-video-player.mjs
+      - name: Save synthetic test results
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: website-local-checks
+          path: audit-results/form-local-tests.json
+          retention-days: 14

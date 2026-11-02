@@ -1,14 +1,16 @@
 document.querySelectorAll("form").forEach((form) => {
   if (!form.querySelector("input[name='form-name'][value='property-enquiry']")) return;
   const submitButton = form.querySelector("[type='submit']");
-  const status = document.createElement("p");
-
-  status.className = "form-status";
-  status.setAttribute("role", "status");
-  status.setAttribute("aria-live", "polite");
-  status.hidden = true;
-  if (submitButton) {
+  let status = null;
+  function requestStatus() {
+    if (status) return status;
+    status = document.createElement("p");
+    status.className = "form-status";
+    status.setAttribute("role", "status");
+    status.setAttribute("aria-live", "polite");
+    status.hidden = true;
     submitButton.insertAdjacentElement("afterend", status);
+    return status;
   }
 
   form.addEventListener("submit", async (event) => {
@@ -22,6 +24,7 @@ document.querySelectorAll("form").forEach((form) => {
     }
 
     if (!form.reportValidity()) return;
+    requestStatus();
     form.dataset.submitting = "true";
     submitButton.disabled = true;
     status.hidden = false;

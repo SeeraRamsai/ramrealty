@@ -1,13 +1,13 @@
 {
-  "enabled": false,
-  "provider": "netlify-only",
+  "enabled": true,
+  "provider": "netlify-web-analytics-and-rum",
+  "managedIn": "Netlify dashboard",
+  "retentionDaysOnCurrentPlan": 1,
   "ga4MeasurementId": null,
   "gtmContainerId": null,
   "metaPixelId": null,
-  "events": [
-    "enquiry_request_completed",
-    "whatsapp_click",
-    "phone_click"
-  ],
-  "note": "Preparation only: this file is outside the publish directory and no loader consumes it. Enquiry request completion must never be labelled a stored lead. Configure consent and review privacy notice before implementing any third-party events. Never put API secrets or customer data here."
+  "metrics": ["pageviews", "unique_visitors", "top_pages", "referral_sources", "missing_resources", "bandwidth", "LCP", "INP", "CLS"],
+  "events": [],
+  "untrackedEvents": ["phone_click", "whatsapp_click", "enquiry_request_completed"],
+  "note": "Records the account-side configuration verified on 2 November 2026; this file does not load tracking code or control account settings. Web Analytics uses Netlify server logs. RUM is injected by Netlify into production HTML. Enquiry counts come from accepted Netlify Forms submissions, not browser request completion. No GA4, GTM or advertising pixels are configured. Never store secrets or customer data here."
 }

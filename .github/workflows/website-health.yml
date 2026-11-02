@@ -1,0 +1,32 @@
+name: Website health
+
+on:
+  schedule:
+    - cron: '30 2 * * *' # Daily, 08:00 Asia/Kolkata
+  workflow_dispatch:
+  deployment_status:
+
+permissions:
+  contents: read
+
+jobs:
+  health:
+    if: github.event_name != 'deployment_status' || github.event.deployment_status.state == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: '3.13'
+      - name: Check live routes, sitemap, redirects and form registration
+        run: python tools/check-live-health.py
+      - name: Save read-only health report
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: website-health
+          path: audit-results/live-health.json
+          retention-days: 14

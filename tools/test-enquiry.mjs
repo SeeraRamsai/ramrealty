@@ -21,14 +21,17 @@ for(const slug of ['mvv-gv-grand','vaisakhi-west-winds','a-square-maple-woods','
  const button=element();button.disabled=false;
  const data={'form-name':'property-enquiry',property,name:'AUDIT TEST - local only',phone:'9999999999',contact_consent:'yes'};
  const form={dataset:{},reportValidity:()=>true,querySelector:(selector)=>selector.includes("form-name") ? {value:"property-enquiry"} : button,addEventListener(type,fn){this.submit=fn}};
- const document={querySelectorAll:(selector)=>selector === "form" ? [form] : [],createElement:()=>element(),createTextNode:text=>({textContent:text})};
+ let statusCreations=0;
+ const document={querySelectorAll:(selector)=>selector === "form" ? [form] : [],createElement:tag=>{if(tag==='p')statusCreations++;return element()},createTextNode:text=>({textContent:text})};
  class LocalFormData{constructor(){return Object.entries(data)}}
  vm.runInNewContext(source,{document,FormData:LocalFormData,URLSearchParams,fetch:(path,opts)=>fetch(base+path,opts),console:{error(){}}});
+ assert.equal(statusCreations,0,'initial page setup must not mutate offscreen status UI');
  const event={preventDefault(){}};
  const beforeInvalid=received.length;form.reportValidity=()=>false;await form.submit(event);assert.equal(received.length,beforeInvalid);assert.equal(button.disabled,false);form.reportValidity=()=>true;
  responseCode=500;await form.submit(event);assert.equal(button.disabled,false);assert.equal(form.dataset.submitting,'false');assert.ok(button.status.children.some(x=>x.href==='tel:+917799251808'));
  responseCode=200;const pending=form.submit(event);await form.submit(event);await pending;
  assert.equal(button.disabled,true);assert.equal(button.textContent,'Receipt unconfirmed');assert.ok(button.status.children.some(x=>/could not confirm receipt/.test(x.textContent)));assert.ok(!button.status.children.some(x=>/enquiry has been sent/.test(x.textContent)));
+ assert.equal(statusCreations,1,'retries must reuse the accessible status region');
  const messages=received.slice(-2);assert.equal(messages.length,2);for(const message of messages){assert.equal(message.path,'/');assert.equal(message.method,'POST');assert.deepEqual(message.fields,data)}
  results.push({project:slug,registrationMarkup:true,invalidFormNotPosted:true,unrelated200DoesNotClaimDelivery:true,errorAndRetry:true,duplicatePrevented:true,payloadPreserved:true});
 }

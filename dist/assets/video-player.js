@@ -19,11 +19,14 @@ function sizeLabel(bytes) {
   return value > 0 ? ` (~${(value / 1000000).toFixed(1)} MB)` : "";
 }
 
-document.querySelectorAll("[data-video-player]").forEach((player) => {
+const initializedWalkthroughs = new WeakSet();
+function initializeWalkthrough(player) {
+  if (initializedWalkthroughs.has(player)) return;
   const button = player.querySelector(".video-load-button");
   const poster = player.querySelector("img");
   const status = player.querySelector(".video-status");
   if (!button || !poster || !status) return;
+  initializedWalkthroughs.add(player);
 
   const title = player.dataset.title || "Property walkthrough";
   let video = null;
@@ -123,7 +126,35 @@ document.querySelectorAll("[data-video-player]").forEach((player) => {
   quality.addEventListener("change", release);
   close.addEventListener("click", () => { release(); button.focus(); });
   visibilityObserver?.observe(player);
+}
+
+// Controls are only needed near the viewport. Keep native preview links and
+// accessible Play buttons in the HTML; never attach media before a Play action.
+const initializationObserver = typeof IntersectionObserver === "function"
+  ? new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          initializeWalkthrough(entry.target);
+          initializationObserver.unobserve(entry.target);
+        }
+      }
+    }, { rootMargin: "600px" })
+  : null;
+
+document.querySelectorAll("[data-video-player]").forEach((player) => {
+  if (initializationObserver) initializationObserver.observe(player);
+  else initializeWalkthrough(player);
 });
+
+function initializeFromInteraction(event) {
+  const player = event.target?.closest?.("[data-video-player]");
+  if (player) initializeWalkthrough(player);
+}
+// Capture handles direct anchor jumps, keyboard focus and an immediate first
+// click before the observer callback, preserving the user's original gesture.
+document.addEventListener("focusin", initializeFromInteraction, true);
+document.addEventListener("pointerdown", initializeFromInteraction, true);
+document.addEventListener("click", initializeFromInteraction, true);
 
 document.addEventListener("visibilitychange", () => {
   if (document.hidden) releaseActiveWalkthrough();
