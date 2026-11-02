@@ -27,7 +27,7 @@ for loc in ET.parse(root/'sitemap.xml').findall('.//{http://www.sitemaps.org/sch
  image_url=meta.get('og:image','');image_path=root/urlsplit(image_url).path.lstrip('/')
  check(image_url.startswith('https://ramrealty.in/') and image_path.is_file(),f'{url}: missing/invalid sharing image')
  check(sum(t=='h1' for t,a in page.tags)==1,f'{url}: main title count')
- if 'project-concept' not in s:continue
+ if not any(t=='figure' and 'project-concept' in a.get('class','').split() for t,a in page.tags):continue
  slug=p.parent.name;projects.append(slug)
  check('3 BHK' in title and ('Madhuravada' in title or 'Bakkannapalem' in title),f'{slug}: title lacks supported configuration/locality')
  check(meta.get('og:title')==title==meta.get('twitter:title'),f'{slug}: inconsistent title metadata')

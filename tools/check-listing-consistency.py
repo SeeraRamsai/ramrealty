@@ -1,4 +1,4 @@
-"""Check owner-confirmed locality spelling and MVV starting-rate consistency."""
+"""Check primary locality spelling, approved search alias and MVV rate consistency."""
 from pathlib import Path
 from html.parser import HTMLParser
 from urllib.parse import urlsplit,unquote
@@ -19,7 +19,14 @@ for p in Path('dist').rglob('*'):
  def strip_external(m):
   return '' if urlsplit(m.group(1)).netloc not in ('ramrealty.in','wa.me') else m.group(0)
  current=re.sub(r'(?:href|src)="(https?://[^"]+)"',strip_external,s)
- check(not re.search(r'madhurawada',current,re.I),f'{p}: old locality spelling in managed copy')
+ # Owner requested both search spellings on the homepage and locality guide.
+ if p in (Path('dist/index.html'),Path('dist/locations/madhuravada/index.html')):
+  current=current.replace('Madhuravada (also searched as Madhurawada)','Madhuravada')
+  current=current.replace('Madhuravada is also searched as Madhurawada.','Madhuravada')
+  current=current.replace('Madhuravada (Madhurawada)','Madhuravada')
+  current=current.replace('Also searched as Madhurawada','Madhuravada search alias')
+  current=current.replace('"alternateName": "Madhurawada"','"alternateName": "Madhuravada"')
+ check(not re.search(r'madhurawada',current,re.I),f'{p}: unapproved alternate locality spelling in managed copy')
  if p.suffix=='.svg':
   tree=ET.fromstring(s);checks+=1
   for node in tree.iter():
