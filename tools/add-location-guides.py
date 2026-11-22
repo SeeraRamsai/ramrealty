@@ -52,7 +52,7 @@ for slug, name, alias, heading, intro, advice in areas:
     <section aria-labelledby="collection"><h2 id="collection">Compare the published project collection</h2><p>These links show each project's stated locality. They are comparison options; current availability in {name} must be confirmed separately.</p><ul>{items}</ul></section>
     <section aria-labelledby="questions"><h2 id="questions">What to ask before a site visit</h2><ul><li>Is the unit within my preferred locality? Please share the full address and map pin.</li><li>Which units are available, and what area basis is used for the quoted rate?</li><li>What is the full written cost, including parking, amenities and other applicable charges?</li><li>Which project documents, approvals and possession details can I review?</li></ul></section>
     <h2>Search nearby areas</h2><p>{links}</p>
-    <div class="actions"><a class="button" href="https://wa.me/917799251808?text={message}" target="_blank" rel="noopener">Ask about homes in {name}</a><a class="button" href="tel:+917799251808">Call +91 77992 51808</a></div>
+    <div class="actions"><a class="button" href="https://wa.me/919391849464?text={message}" target="_blank" rel="noopener">Ask about homes in {name}</a><a class="button" href="tel:+919391849464">Call +91 93918 49464</a></div>
     </main>'''
     s = re.sub(r'<main\b.*?</main>',lambda m:content,s,flags=re.S)
     target = root/'locations'/slug/'index.html'

@@ -57,7 +57,7 @@ expected = [node.text for node in ET.parse('dist/sitemap.xml').findall('.//{http
 paths = [urlsplit(url).path for url in expected]
 aliases = {'/about': '/about.html', '/faq': '/faq.html', '/privacy': '/privacy.html',
            '/favicon.ico': '/assets/ram-realty-logo-small.png'}
-extra = ['/robots.txt', '/sitemap.xml', '/health-check-missing-page/', '/thank-you.html', '/404.html', '/assets/analytics.js?v=1']
+extra = ['/robots.txt', '/sitemap.xml', '/health-check-missing-page/', '/thank-you.html', '/404.html', '/assets/analytics.js?v=2']
 with ThreadPoolExecutor(max_workers=3) as pool:
     rows = list(pool.map(fetch, paths + extra + list(aliases)))
 by_path = {row['path']: row for row in rows}
@@ -76,7 +76,7 @@ for url in expected:
         errors.append(path + ': unexpected noindex header')
     if not any(tag == 'h1' for tag, a in page.tags):
         errors.append(path + ': missing main heading')
-    if not any(tag == 'script' and a.get('src') == '/assets/analytics.js?v=1' for tag, a in page.tags):
+    if not any(tag == 'script' and a.get('src') == '/assets/analytics.js?v=2' for tag, a in page.tags):
         errors.append(path + ': analytics consent helper missing')
     if not any('data-analytics-choice' in a for tag, a in page.tags) or not any('data-analytics-manage' in a for tag, a in page.tags):
         errors.append(path + ': analytics choice controls missing')
@@ -117,7 +117,7 @@ try:
         errors.append('Live sitemap URLs differ from checked-out release')
 except (KeyError, ET.ParseError):
     errors.append('Live sitemap unavailable or invalid')
-analytics = by_path['/assets/analytics.js?v=1']
+analytics = by_path['/assets/analytics.js?v=2']
 measurement = json.loads(Path('config/measurement.json').read_text(encoding='utf8'))['ga4MeasurementId']
 if analytics.get('status') != 200 or measurement not in analytics.get('body', ''):
     errors.append('Deployed analytics helper or configured measurement ID missing')

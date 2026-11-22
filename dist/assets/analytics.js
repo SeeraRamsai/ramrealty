@@ -3,6 +3,7 @@
   const preferenceKey = 'ramrealty-analytics-consent-v1';
   const panel = document.querySelector('[data-analytics-choice]');
   if (!panel) return;
+  const isMobile = window.matchMedia?.('(max-width: 760px)')?.matches ?? false;
   let consent = '';
   let loaded = false;
   let opener = null;
@@ -86,5 +87,5 @@
     }
   }, true);
   if (consent === 'granted') activate();
-  else if (consent !== 'denied') panel.hidden = false;
+  else if (consent !== 'denied' && !isMobile) panel.hidden = false;
 })();

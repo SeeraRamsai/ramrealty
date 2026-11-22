@@ -1,6 +1,17 @@
 # Ram Realty website audit ? 15 October 2026
 
-## Status
+## Latest follow-up ? 18 October 2026
+
+See [RELEASE_REVIEW_2026-10-18.md](RELEASE_REVIEW_2026-10-18.md) for the consolidated release, verification evidence and remaining limitations. Earlier same-day findings are recorded in [TECHNICAL_SEO_REVIEW_2026-10-18.md](TECHNICAL_SEO_REVIEW_2026-10-18.md).
+
+- Owner decision: keep tested commit `443b35c` local until the 1 November credit reset. Nothing was pushed or deployed, and no automatic release is scheduled. Billing showed five credits remaining; production deployment costs 15.
+- Local performance changes remove render-blocking CSS requests while preserving stylesheet order. Current local Lighthouse performance: homepage 86 mobile / 100 desktop; MVV 79 mobile / 100 desktop. All four runs scored 100 for automated accessibility, best practices and SEO. Mobile blocking time remains an improvement area; these are lab results, not field Core Web Vitals.
+- Verification passed: 796 static checks, 28 current embedded stylesheet blocks, four project form regressions and video lifecycle checks. Manual Chrome checks covered six pages at 320px and 1536px.
+- One authorized labelled live MVV test was captured as a verified Netlify submission on 18 October. Email notification arrival remains unconfirmed. No additional live submission is planned.
+- Search Console last confirmed the homepage indexed and all four project indexing requests accepted on 18 October. Sitemap Success, nine discovered pages, last read 17 October. A later progress recheck was blocked by a browser automation timeout; no newer indexing status is asserted.
+- Publish-folder redirects and sitemap dates are fixed locally. Live verification of the three information-page canonical redirects remains pending deployment.
+
+## Historical status — 15 October 2026
 Latest local update: [LOCALITY_AND_PRICE_UPDATE.md](LOCALITY_AND_PRICE_UPDATE.md). All four project side images are verified distinct illustrations. Editable site copy now uses Madhuravada; MVV starts at ₹5,300/sq ft of total saleable area. Current checks: 557 site + 171 SEO/hero + 48 locality/rate checks, zero errors; homepage and four project pages score 100 for automated SEO/accessibility/best practices locally. Public Google locality query did not establish indexing. Nothing has been pushed or deployed.
 
 Latest local SEO/hero follow-up: [SEO_REVIEW_2026-10-15.md](SEO_REVIEW_2026-10-15.md). It refines metadata/topics, adds homepage WebSite data and contextual links, and promotes four distinct existing concept illustrations into project heroes. All changes remain uncommitted and undeployed. Final batch checks: 558 site checks plus 171 SEO/hero checks; four local mobile Lighthouse SEO/accessibility scores of 100. Backlinks remain unverified; no external posts or links were created.

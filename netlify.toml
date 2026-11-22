@@ -1,6 +1,10 @@
 [build]
   publish = "dist"
 
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
 # Preserve the existing .html canonical URLs and do not rewrite page links.
 [build.processing.html]
   pretty_urls = false

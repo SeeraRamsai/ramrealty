@@ -1,15 +1,20 @@
 # Ram Realty property website
 
-A static property website for Ram Realty, featuring a Visakhapatnam property collection and project detail pages. The site is served directly from `dist`; it does not require a build step or package installation.
+A static property website for Ram Realty, featuring a Visakhapatnam property collection and project detail pages, plus a Netlify Function for site-visit bookings. Static pages are served from `dist`; Netlify bundles the function and its `@netlify/blobs` dependency.
 
 ## Project structure
 
 ```text
 .
 ├── netlify.toml
+├── netlify/functions/site-visits.mjs
+├── package.json
 └── dist/
     ├── index.html
     ├── thank-you.html
+    ├── site-visit.html
+    ├── site-visit-confirmation.html
+    ├── site-visits-admin.html
     ├── privacy.html
     ├── about.html
     ├── faq.html
@@ -69,6 +74,9 @@ All four property landing pages include a static HTML Netlify form named `proper
 
 Submissions are stored by Netlify, not written directly into Google Sheets. To use them in Sheets, export the form submissions as a CSV from the Netlify dashboard and import that CSV into Google Sheets.
 
+## Site-visit bookings
+
+The `/site-visit.html` form posts to a Netlify Function, which saves each booking in the persistent `site-visit-bookings` Netlify Blobs store and creates a tentative, busy-blocking Google Calendar event when credentials are configured. The requested time remains unconfirmed until staff marks it confirmed in `/site-visits-admin.html`. The admin tool uses a server-side token and can confirm, cancel, complete or retry calendar synchronization. WhatsApp booking updates remain manual. See [SITE_VISIT_BOOKINGS.md](./SITE_VISIT_BOOKINGS.md) for the required Google/Netlify setup, secrets and workflow.
 
 The project pages include Ram Realty owner-share details, downloadable posters and video walkthroughs. Supplied official brochures and floor/building plans are published under `dist/assets/documents/` and linked from the matching project page. The `/videos/` page contains 12 supplied property clips. Posters load lazily, and each MP4 source is attached only after a visitor presses Play walkthrough. Pricing, area basis, possession/status, charges and RERA details should be reconfirmed against current project records.
 
@@ -77,7 +85,7 @@ The project pages include Ram Realty owner-share details, downloadable posters a
 
 After editing shared stylesheets, run `python tools/inline-page-styles.py`. The small stylesheets are embedded in their original cascade order, removing first-render CSS requests without a runtime loader. CSS files remain the editable source; generated HTML is committed, so Netlify still needs no build step. The generator rejects CSS imports/asset URLs that need separate resolution rather than silently changing their destinations.
 
-Before pushing, run `python tools/inline-page-styles.py --check`, `python tools/audit_site.py`, `python tools/check-project-seo.py`, `python tools/check-listing-consistency.py`, `node tools/test-enquiry.mjs`, `node tools/test-video-player.mjs`, `node tools/test-campaign-fields.mjs`, `node tools/test-analytics.mjs`, and `git diff --check`. The enquiry test uses a local HTTP receiver and DOM stubs; it does not submit real leads or verify Netlify notification delivery. Generated test reports are written to `audit-results/` and should remain local.
+Before pushing, run `python tools/inline-page-styles.py --check`, `python tools/audit_site.py`, `python tools/check-project-seo.py`, `python tools/check-listing-consistency.py`, `node tools/test-enquiry.mjs`, `node tools/test-site-visit.mjs`, `node tools/test-site-visits-function.mjs`, `node tools/test-video-player.mjs`, `node tools/test-campaign-fields.mjs`, `node tools/test-analytics.mjs`, and `git diff --check`. Form tests do not submit real leads or verify production Netlify/Google configuration. Generated test reports are written to `audit-results/` and should remain local.
 
 Run `python tools/check-crawlability.py` to verify that every sitemap page is reachable from homepage HTML links without JavaScript. With the local preview running on port 8000 and Lighthouse already installed, `python tools/run-accessibility-review.py` audits accessibility, best practices and SEO across the site. It uses a cached local Lighthouse installation or the `LIGHTHOUSE_CLI` environment variable and writes reports under `audit-results/`; it does not install dependencies or publish the site. Utility pages intentionally marked `noindex` are excluded from SEO scoring. Browser/port permissions may be required to launch the audit browser.
 

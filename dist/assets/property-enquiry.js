@@ -49,8 +49,8 @@ document.querySelectorAll("form").forEach((form) => {
         "Your request completed, but we could not confirm receipt. It may have arrived. Please call ",
       ));
       const phone = document.createElement("a");
-      phone.href = "tel:+917799251808";
-      phone.textContent = "+91 77992 51808";
+      phone.href = "tel:+919391849464";
+      phone.textContent = "+91 93918 49464";
       status.append(phone);
       status.append(document.createTextNode(" to check before submitting again."));
     } catch (error) {
@@ -61,8 +61,8 @@ document.querySelectorAll("form").forEach((form) => {
         ),
       );
       const phone = document.createElement("a");
-      phone.href = "tel:+917799251808";
-      phone.textContent = "+91 77992 51808";
+      phone.href = "tel:+919391849464";
+      phone.textContent = "+91 93918 49464";
       status.append(phone);
       status.append(document.createTextNode("."));
       form.dataset.submitting = "false";

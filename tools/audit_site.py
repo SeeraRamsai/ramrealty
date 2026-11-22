@@ -47,12 +47,18 @@ for p in root.rglob('*.html'):
   if isinstance(schema,dict) and schema.get('@type')=='RealEstateListing':
    check('address' not in schema and 'broker' not in schema,'listing uses supported WebPage properties')
    check(schema.get('about',{}).get('@type')=='ApartmentComplex','listing describes the apartment project')
-   check(schema.get('publisher',{}).get('telephone')=='+91-77992-51808','listing publisher contact')
+   check(schema.get('publisher',{}).get('telephone')=='+91-93918-49464','listing publisher contact')
    check(schema.get('breadcrumb',{}).get('@type')=='BreadcrumbList','listing breadcrumb data')
- if any(t=='form' for t,a in page.tags):
-  check('name="form-name" value="property-enquiry"' in s,'Netlify form name')
-  check('name="contact_consent"' in s,'consent field')
+ form_names={a.get('value') for t,a in page.tags if t=='input' and a.get('name')=='form-name'}
+ if form_names:
+  check(len(form_names)==1,'one Netlify form name per page')
   check('name="bot-field"' in s,'honeypot')
+  if 'property-enquiry' in form_names:
+   check('name="contact_consent"' in s,'enquiry consent field')
+  elif 'site-visit-booking' in form_names:
+   check('name="whatsapp_updates_consent"' in s,'site-visit WhatsApp consent field')
+  else:
+   check(False,'recognized Netlify form name')
 # Shared Netlify form names must register the same union of fields on every page.
 field_sets=[]
 for page_path in root.rglob('*.html'):

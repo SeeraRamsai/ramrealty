@@ -1,0 +1,10 @@
+{
+  "name": "ramrealty-site",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^11.1.9"
+  }
+}

@@ -1,4 +1,5 @@
 .asset-tools/
+node_modules/
 .venv/
 audit-results/
 artwork/project-banners/*.png
