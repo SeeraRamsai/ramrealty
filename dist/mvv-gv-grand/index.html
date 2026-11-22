@@ -249,6 +249,75 @@
 .form-status[hidden] {
   display: none;
 }
+
+.lead-form .fields {
+  align-items: start;
+  gap: 1rem;
+}
+
+.lead-form .fields > label {
+  display: grid;
+  align-content: start;
+  min-width: 0;
+  gap: .45rem;
+  font: 600 .93rem/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.lead-form .fields input:not([type="hidden"]):not([type="checkbox"]),
+.lead-form .fields select {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: 48px;
+  min-height: 48px;
+  margin: 0;
+  padding: .7rem .8rem;
+  border: 1px solid #625b4b;
+  border-radius: 6px;
+  background: #11100e;
+  color: #f5f0e6;
+  font: 400 1rem/1.2 system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.2;
+}
+
+.lead-form .fields > label.full {
+  grid-column: 1 / -1;
+}
+
+.lead-form .consent {
+  display: flex;
+  align-items: flex-start;
+  gap: .65rem;
+  margin: .9rem 0;
+  font-size: .875rem;
+  line-height: 1.5;
+}
+
+.lead-form .consent input[type="checkbox"] {
+  flex: 0 0 1.1rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin: .2rem 0 0;
+  accent-color: #d8b66a;
+}
+
+.lead-form .form-submit {
+  width: 100%;
+  min-height: 48px;
+  margin-top: .9rem;
+  padding: .7rem 1.2rem;
+}
+
+@media (max-width: 960px) {
+  .lead-form .fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lead-form .fields > label.full {
+    grid-column: auto;
+  }
+}
 </style><script src="../assets/property-enquiry.js?v=4" defer></script><style data-inline-stylesheet="/assets/site-accessibility.css">
 /* Shared keyboard, motion and small-screen improvements. */
 .skip-link{position:fixed;top:8px;left:8px;z-index:1000;padding:12px 18px;background:#f5f0e6;color:#11100e;transform:translateY(-180%)}
