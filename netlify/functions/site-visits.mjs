@@ -153,7 +153,8 @@ async function syncCalendarEvent(booking, env, fetchImpl) {
 }
 
 async function sendBookingNotification(booking, requestUrl, env, fetchImpl) {
-  const siteUrl = env.URL || new URL(requestUrl).origin;
+  const siteUrl = env.DEPLOY_PRIME_URL || env.URL ||
+    new URL(requestUrl, "https://ramrealty.in").origin;
   const endpoint = new URL("/site-visit.html", siteUrl);
   const notification = await fetchImpl(endpoint, {
     method: "POST",
@@ -255,7 +256,7 @@ export function createHandler({
   logger = console,
 } = {}) {
   return async (request) => {
-    const url = new URL(request.url);
+    const url = new URL(request.url, env.DEPLOY_PRIME_URL || env.URL || "https://ramrealty.in");
 
     if (request.method === "GET") {
       if (url.searchParams.get("health") === "1") {
@@ -305,7 +306,7 @@ export function createHandler({
           return jsonResponse(200, { deleted: true });
         }
         if (payload.action === "retry-notification" && booking.notificationStatus !== "sent") {
-          await sendBookingNotification(booking, request.url, env, fetchImpl);
+          await sendBookingNotification(booking, url.href, env, fetchImpl);
           booking.notificationStatus = "sent";
           booking.notificationError = "";
         } else if (payload.action === "retry-calendar") {
@@ -396,7 +397,7 @@ export function createHandler({
 
     if (booking.notificationStatus !== "sent") {
       try {
-        await sendBookingNotification(booking, request.url, env, fetchImpl);
+        await sendBookingNotification(booking, url.href, env, fetchImpl);
         booking.notificationStatus = "sent";
         booking.notificationError = "";
       } catch (error) {

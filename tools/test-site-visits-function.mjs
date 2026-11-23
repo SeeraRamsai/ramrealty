@@ -113,6 +113,11 @@ async function adminRequest(method, payload, token = adminToken) {
 
 const validId = "9a7b1234-1111-4111-8111-111111111111";
 assert.equal((await healthRequest()).status, 200);
+assert.equal((await handler({
+  method: "GET",
+  url: "/.netlify/functions/site-visits?health=1",
+  headers: new Headers(),
+})).status, 200, "relative function URLs should be resolved against the site origin");
 const saved = await handler(formRequest(bookingFields(validId)));
 assert.equal(saved.status, 303);
 assert.match(saved.headers.get("location"), /calendar=created/);
