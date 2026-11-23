@@ -10,6 +10,11 @@ const operations = readFileSync("SITE_VISIT_BOOKINGS.md", "utf8");
 
 assert.match(booking, /<form\b[^>]*name="site-visit-booking"[^>]*method="POST"[^>]*action="\/\.netlify\/functions\/site-visits"/);
 assert.match(booking, /name="form-name" value="site-visit-booking"/);
+assert.match(booking, /<form\b[^>]*name="site-visit-notification"[^>]*data-netlify="true"[^>]*hidden>/);
+assert.match(booking, /name="form-name" value="site-visit-notification"/);
+for (const field of ["booking_reference", "property", "visit_date", "visit_time"]) {
+  assert.match(booking, new RegExp(`name="${field}"`), `${field} must be included in the alert form`);
+}
 assert.match(booking, /name="booking_id" data-booking-id/);
 assert.match(booking, /name="bot-field"/);
 for (const field of ["name", "phone", "property", "visit_date", "visit_time", "whatsapp_updates_consent"]) {
@@ -31,6 +36,7 @@ assert.match(operations, /SITE_VISIT_ADMIN_TOKEN/);
 assert.match(operations, /Google Calendar/);
 assert.match(readFileSync("dist/site-visits-admin.html", "utf8"), /noindex,nofollow/);
 assert.match(readFileSync("dist/assets/site-visits-admin.js", "utf8"), /Authorization: `Bearer/);
+assert.match(readFileSync("dist/assets/site-visits-admin.js", "utf8"), /Retry email alert/);
 assert.match(readFileSync("netlify/functions/site-visits.mjs", "utf8"), /STORE_NAME = "site-visit-bookings"/);
 
 for (const file of [

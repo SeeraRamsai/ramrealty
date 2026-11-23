@@ -34,13 +34,26 @@ const env = {
   GOOGLE_REFRESH_TOKEN: "test-refresh-token",
   GOOGLE_CALENDAR_ID: "primary",
   SITE_VISIT_ADMIN_TOKEN: adminToken,
+  URL: "https://ramrealty.test",
 };
 const store = new MemoryStore();
 const calendarCalls = [];
+const notificationCalls = [];
 const loggedErrors = [];
 let failCalendar = false;
+let failNotification = false;
 const fetchImpl = async (input, options = {}) => {
   const url = new URL(input);
+  if (url.pathname === "/site-visit.html") {
+    notificationCalls.push({ url, options });
+    if (failNotification) return new Response("<!doctype html>", { status: 200 });
+    const receipt = new Response(null, { status: 200 });
+    Object.defineProperties(receipt, {
+      url: { value: `${url.origin}/site-visit.html?notification=received` },
+      redirected: { value: true },
+    });
+    return receipt;
+  }
   if (url.hostname === "oauth2.googleapis.com") {
     return Response.json({ access_token: "mock-access-token" });
   }
@@ -65,6 +78,10 @@ function formRequest(fields) {
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams(fields),
   });
+}
+
+function healthRequest(handlerToCall = handler) {
+  return handlerToCall(new Request(`${baseUrl}?health=1`));
 }
 
 function bookingFields(id, overrides = {}) {
@@ -95,14 +112,26 @@ async function adminRequest(method, payload, token = adminToken) {
 }
 
 const validId = "9a7b1234-1111-4111-8111-111111111111";
+assert.equal((await healthRequest()).status, 200);
 const saved = await handler(formRequest(bookingFields(validId)));
 assert.equal(saved.status, 303);
 assert.match(saved.headers.get("location"), /calendar=created/);
 const record = await store.get(`booking-${validId}`, { type: "json" });
 assert.equal(record.status, "tentative");
 assert.equal(record.calendarSync, "synced");
+assert.equal(record.notificationStatus, "sent");
 assert.equal(record.phone, "9999999999");
 assert.equal(calendarCalls.length, 1);
+assert.equal(notificationCalls.length, 1);
+const notificationFields = new URLSearchParams(notificationCalls[0].options.body);
+assert.equal(notificationFields.get("form-name"), "site-visit-notification");
+assert.equal(notificationFields.get("booking_reference"), validId);
+assert.equal(notificationFields.get("property"), "A Square Maple Woods");
+assert.equal(notificationFields.get("visit_date"), "2026-11-25");
+assert.equal(notificationFields.get("visit_time"), "15:00-17:00");
+assert.equal(notificationFields.has("phone"), false);
+assert.equal(notificationFields.has("name"), false);
+assert.equal(notificationFields.has("notes"), false);
 const createdEvent = JSON.parse(calendarCalls[0].options.body);
 assert.equal(calendarCalls[0].options.method, "POST");
 assert.equal(createdEvent.status, "tentative");
@@ -115,6 +144,7 @@ assert.doesNotMatch(JSON.stringify(createdEvent), /9999999999|DEMO ONLY/);
 const duplicate = await handler(formRequest(bookingFields(validId)));
 assert.equal(duplicate.status, 303);
 assert.equal(calendarCalls.length, 1, "same booking ID must not create another calendar event");
+assert.equal(notificationCalls.length, 1, "same booking ID must not send another alert");
 
 assert.equal((await adminRequest("GET", undefined, "wrong-token")).status, 401);
 const adminList = await adminRequest("GET");
@@ -158,6 +188,23 @@ const retry = await adminRequest("PATCH", { bookingId: failedId, action: "retry-
 assert.equal(retry.status, 200);
 assert.equal((await store.get(`booking-${failedId}`)).calendarSync, "synced");
 
+const notificationFailedId = "9a7b1234-6666-4666-8666-666666666666";
+failNotification = true;
+const notificationFailure = await handler(formRequest(bookingFields(notificationFailedId)));
+assert.equal(notificationFailure.status, 303, "saved booking remains accepted if its alert needs retry");
+const notificationFailedRecord = await store.get(`booking-${notificationFailedId}`);
+assert.equal(notificationFailedRecord.notificationStatus, "failed");
+assert.match(notificationFailedRecord.notificationError, /did not confirm/);
+const notificationsBeforeRetry = notificationCalls.length;
+failNotification = false;
+const notificationRetry = await adminRequest("PATCH", {
+  bookingId: notificationFailedId,
+  action: "retry-notification",
+});
+assert.equal(notificationRetry.status, 200);
+assert.equal((await store.get(`booking-${notificationFailedId}`)).notificationStatus, "sent");
+assert.equal(notificationCalls.length, notificationsBeforeRetry + 1);
+
 const invalidId = "9a7b1234-3333-4333-8333-333333333333";
 const invalid = await handler(formRequest(bookingFields(invalidId, { phone: "123" })));
 assert.equal(invalid.status, 400);
@@ -166,4 +213,14 @@ const honeypot = await handler(formRequest(bookingFields(invalidId, { "bot-field
 assert.equal(honeypot.status, 303);
 assert.equal(await store.get(`booking-${invalidId}`), null);
 
-console.log("Site-visit function passed: Blobs persistence, tentative event creation, authorization, status transitions, record/event deletion, idempotency, calendar retry, validation and honeypot.");
+const unavailableHandler = createHandler({
+  getStoreImpl: () => { throw new Error("storage not configured"); },
+  logger: { error: (...args) => loggedErrors.push(args) },
+});
+assert.equal((await healthRequest(unavailableHandler)).status, 503);
+assert.equal((await unavailableHandler(new Request(baseUrl, { method: "GET" }))).status, 401);
+const unavailableBooking = await unavailableHandler(formRequest(bookingFields("9a7b1234-5555-4555-8555-555555555555")));
+assert.equal(unavailableBooking.status, 503);
+assert.match(await unavailableBooking.text(), /could not save your request/i);
+
+console.log("Site-visit function passed: storage and email alert health, minimal notification data, alert retry, graceful storage failures, Blobs persistence, calendar sync, authorization, status transitions, idempotency, validation and honeypot.");

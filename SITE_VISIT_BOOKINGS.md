@@ -2,6 +2,10 @@
 
 The public booking page is `/site-visit.html`. It submits to the `site-visits` Netlify Function. The function stores the request in the persistent `site-visit-bookings` Netlify Blobs store and creates a tentative Google Calendar event. The confirmation page makes clear that the requested slot is not confirmed until staff checks availability and confirms it.
 
+Production status checked 23 November 2026: the booking page loads, but the function returns HTTP 502 because the deployed runtime is missing the Netlify Blobs site ID/token context. The project environment-variable page is empty, so the staff admin token and Google Calendar credentials are also not configured. No booking was submitted. The local handler now returns an explicit service-unavailable response for storage failures and exposes a read-only health probe; restore the Netlify-provided Blobs context, privately configure required admin/Calendar values, deploy, and verify that the health probe returns 200 before relying on bookings.
+
+After a booking is stored, the function submits a separate `site-visit-notification` Netlify Form containing only the booking reference, property and requested date/time. The existing email notification rule can then alert on the new form without duplicating visitor contact details. The protected manager shows alert status and allows staff to retry a failed alert. Netlify Form acceptance and inbox delivery must be verified after deployment.
+
 ## Enable database and calendar integration
 
 1. Enable the Google Calendar API in the Google Cloud project that owns the calendar.

@@ -57,7 +57,8 @@ expected = [node.text for node in ET.parse('dist/sitemap.xml').findall('.//{http
 paths = [urlsplit(url).path for url in expected]
 aliases = {'/about': '/about.html', '/faq': '/faq.html', '/privacy': '/privacy.html',
            '/favicon.ico': '/assets/ram-realty-logo-small.png'}
-extra = ['/robots.txt', '/sitemap.xml', '/health-check-missing-page/', '/thank-you.html', '/404.html', '/assets/analytics.js?v=2']
+extra = ['/robots.txt', '/sitemap.xml', '/health-check-missing-page/', '/thank-you.html', '/404.html',
+         '/assets/analytics.js?v=2', '/.netlify/functions/site-visits?health=1']
 with ThreadPoolExecutor(max_workers=3) as pool:
     rows = list(pool.map(fetch, paths + extra + list(aliases)))
 by_path = {row['path']: row for row in rows}
@@ -85,9 +86,20 @@ for url in expected:
     policy = row['headers'].get('content-security-policy', '')
     if "object-src 'none'" not in policy or "form-action 'self'" not in policy:
         errors.append(path + ': expected embedding/form policy missing')
-    if any(tag == 'form' for tag, a in page.tags):
+    forms = [a for tag, a in page.tags if tag == 'form']
+    if any(form.get('name') == 'property-enquiry' for form in forms):
         if 'name="form-name" value="property-enquiry"' not in row['body'] or 'contact_consent' not in row['body']:
             errors.append(path + ': deployed form registration/consent missing')
+    if path == '/site-visit.html':
+        if not any(form.get('name') == 'site-visit-booking' and
+                   form.get('method', '').upper() == 'POST' and
+                   form.get('action') == '/.netlify/functions/site-visits' for form in forms):
+            errors.append(path + ': site-visit booking form/function wiring missing')
+        if not any(form.get('name') == 'site-visit-notification' and 'hidden' in form for form in forms) or \
+           'name="form-name" value="site-visit-notification"' not in row['body']:
+            errors.append(path + ': site-visit email notification form is not registered')
+if by_path['/.netlify/functions/site-visits?health=1'].get('status') != 200:
+    errors.append('Site-visit function or booking storage health check failed')
 for path, destination in aliases.items():
     row = by_path[path]
     if row.get('status') != 301 or urljoin(base, row.get('headers', {}).get('location', '')) != base + destination:

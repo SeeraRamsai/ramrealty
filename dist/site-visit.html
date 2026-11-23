@@ -263,6 +263,14 @@ h2 { font: 500 1.55rem/1.25 Georgia, serif; }
         <p class="form-note">Your selected date and time are a request, not a confirmed appointment. We will message you on WhatsApp after checking availability.</p>
       </form>
 
+      <form name="site-visit-notification" method="POST" action="/site-visit.html?notification=received" data-netlify="true" hidden>
+        <input type="hidden" name="form-name" value="site-visit-notification">
+        <input type="hidden" name="booking_reference">
+        <input type="hidden" name="property">
+        <input type="hidden" name="visit_date">
+        <input type="hidden" name="visit_time">
+      </form>
+
       <aside class="visit-updates" aria-labelledby="updates-heading">
         <p class="eyebrow">What happens next</p>
         <h2 id="updates-heading">Updates all the way through</h2>

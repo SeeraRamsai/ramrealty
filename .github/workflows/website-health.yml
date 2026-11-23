@@ -2,7 +2,7 @@ name: Website health
 
 on:
   schedule:
-    - cron: '30 2 * * *' # Daily, 08:00 Asia/Kolkata
+    - cron: '*/30 * * * *' # Every 30 minutes; GitHub may delay scheduled runs
   workflow_dispatch:
   deployment_status:
 

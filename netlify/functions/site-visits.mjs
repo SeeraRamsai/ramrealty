@@ -152,6 +152,34 @@ async function syncCalendarEvent(booking, env, fetchImpl) {
   return { state: "synced", eventId: event.id };
 }
 
+async function sendBookingNotification(booking, requestUrl, env, fetchImpl) {
+  const siteUrl = env.URL || new URL(requestUrl).origin;
+  const endpoint = new URL("/site-visit.html", siteUrl);
+  const notification = await fetchImpl(endpoint, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      "form-name": "site-visit-notification",
+      booking_reference: booking.id,
+      property: booking.property,
+      visit_date: booking.visitDate,
+      visit_time: booking.visitTime,
+    }),
+  });
+  let receiptUrl;
+  try {
+    receiptUrl = new URL(notification.url);
+  } catch {
+    throw new Error("Netlify did not confirm the site-visit alert submission.");
+  }
+  if (!notification.ok || !notification.redirected ||
+      receiptUrl.origin !== endpoint.origin ||
+      receiptUrl.pathname !== endpoint.pathname ||
+      receiptUrl.searchParams.get("notification") !== "received") {
+    throw new Error(`Netlify did not confirm the site-visit alert submission (HTTP ${notification.status}).`);
+  }
+}
+
 function authorized(request, env) {
   const expected = env.SITE_VISIT_ADMIN_TOKEN;
   const supplied = request.headers.get("authorization")?.replace(/^Bearer\s+/i, "") || "";
@@ -227,12 +255,27 @@ export function createHandler({
   logger = console,
 } = {}) {
   return async (request) => {
-    const store = getStoreImpl(STORE_NAME);
     const url = new URL(request.url);
 
     if (request.method === "GET") {
+      if (url.searchParams.get("health") === "1") {
+        try {
+          const store = getStoreImpl(STORE_NAME);
+          await store.list({ prefix: "__healthcheck__" });
+          return jsonResponse(200, { status: "ok" });
+        } catch (error) {
+          logger.error("Site-visit storage health check failed.", error);
+          return jsonResponse(503, { error: "Booking storage is unavailable." });
+        }
+      }
       if (!authorized(request, env)) return jsonResponse(401, { error: "Admin authorization required." });
-      return jsonResponse(200, { bookings: await listBookings(store) });
+      try {
+        const store = getStoreImpl(STORE_NAME);
+        return jsonResponse(200, { bookings: await listBookings(store) });
+      } catch (error) {
+        logger.error("Site-visit bookings could not be loaded from Netlify Blobs.", error);
+        return jsonResponse(503, { error: "Booking storage is unavailable." });
+      }
     }
 
     if (request.method === "PATCH" || request.method === "DELETE") {
@@ -244,7 +287,15 @@ export function createHandler({
         return jsonResponse(400, { error: "Expected a JSON booking update." });
       }
       const bookingId = cleanText(payload.bookingId, 36);
-      const booking = await store.get(`${KEY_PREFIX}${bookingId}`, { type: "json" });
+      let store;
+      let booking;
+      try {
+        store = getStoreImpl(STORE_NAME);
+        booking = await store.get(`${KEY_PREFIX}${bookingId}`, { type: "json" });
+      } catch (error) {
+        logger.error("Site-visit booking could not be loaded from Netlify Blobs.", error);
+        return jsonResponse(503, { error: "Booking storage is unavailable." });
+      }
       if (!booking) return jsonResponse(404, { error: "Booking not found." });
 
       try {
@@ -253,7 +304,11 @@ export function createHandler({
           await store.delete(`${KEY_PREFIX}${booking.id}`);
           return jsonResponse(200, { deleted: true });
         }
-        if (payload.action === "retry-calendar") {
+        if (payload.action === "retry-notification" && booking.notificationStatus !== "sent") {
+          await sendBookingNotification(booking, request.url, env, fetchImpl);
+          booking.notificationStatus = "sent";
+          booking.notificationError = "";
+        } else if (payload.action === "retry-calendar") {
           const calendar = await syncCalendarEvent(booking, env, fetchImpl);
           if (calendar.state !== "synced") throw new Error("Google Calendar is not configured.");
           booking.calendarSync = calendar.state;
@@ -268,13 +323,13 @@ export function createHandler({
         } else if (payload.action === "complete" && booking.status === "confirmed") {
           booking.status = "completed";
         } else {
-          return jsonResponse(409, { error: "That status change is not allowed for this booking." });
+          return jsonResponse(409, { error: "That booking action is not allowed." });
         }
         booking.updatedAt = now().toISOString();
         await store.setJSON(`${KEY_PREFIX}${booking.id}`, booking);
         return jsonResponse(200, { booking });
       } catch (error) {
-        logger.error("Site-visit calendar update failed.", error);
+        logger.error("Site-visit booking update failed.", error);
         return jsonResponse(502, { error: error.message });
       }
     }
@@ -308,22 +363,28 @@ export function createHandler({
 
     const key = `${KEY_PREFIX}${booking.id}`;
     const createdAt = now().toISOString();
+    let store;
     const record = {
       ...booking,
       status: "tentative",
       calendarSync: "pending",
       calendarEventId: "",
       calendarError: "",
+      notificationStatus: "pending",
+      notificationError: "",
       createdAt,
       updatedAt: createdAt,
     };
 
     try {
+      store = getStoreImpl(STORE_NAME);
       const { modified } = await store.setJSON(key, record, { onlyIfNew: true });
       if (!modified) {
         const existing = await store.get(key, { type: "json" });
         if (!existing) throw new Error("The existing booking could not be read.");
-        if (existing.calendarSync === "synced") return redirect("/site-visit-confirmation.html");
+        if (existing.calendarSync === "synced" && existing.notificationStatus === "sent") {
+          return redirect("/site-visit-confirmation.html");
+        }
         booking = existing;
       } else {
         booking = record;
@@ -331,6 +392,25 @@ export function createHandler({
     } catch (error) {
       logger.error("Site-visit booking could not be saved to Netlify Blobs.", error);
       return response(503, "We could not save your request. Please try again or call +91 93918 49464.");
+    }
+
+    if (booking.notificationStatus !== "sent") {
+      try {
+        await sendBookingNotification(booking, request.url, env, fetchImpl);
+        booking.notificationStatus = "sent";
+        booking.notificationError = "";
+      } catch (error) {
+        logger.error("Site-visit booking was saved, but its email alert failed.", error);
+        booking.notificationStatus = "failed";
+        booking.notificationError = error.message;
+      }
+      booking.updatedAt = now().toISOString();
+      try {
+        await store.setJSON(key, booking);
+      } catch (error) {
+        logger.error("Site-visit email alert status could not be saved.", error);
+        return response(503, "Your request was saved, but its alert status could not be recorded. Please call +91 93918 49464.");
+      }
     }
 
     try {

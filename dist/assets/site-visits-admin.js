@@ -54,6 +54,11 @@ function renderBookings(bookings) {
       `Status: ${booking.status} · Calendar: ${booking.calendarSync}`,
       "admin-booking-status",
     );
+    const notification = makeElement(
+      "p",
+      `Email alert: ${booking.notificationStatus || "pending"}`,
+      "admin-booking-status",
+    );
     const details = makeElement("dl", "");
     for (const [label, value] of [
       ["Visitor", booking.name],
@@ -65,12 +70,18 @@ function renderBookings(bookings) {
     ]) {
       details.append(makeElement("dt", label), makeElement("dd", value));
     }
-    card.append(heading, status, details);
+    card.append(heading, status, notification, details);
 
     if (booking.calendarError) {
       card.append(makeElement("p", `Calendar sync issue: ${booking.calendarError}`, "admin-error"));
     }
+    if (booking.notificationError) {
+      card.append(makeElement("p", `Email alert issue: ${booking.notificationError}`, "admin-error"));
+    }
     const actions = makeElement("div", "", "admin-actions");
+    if (booking.notificationStatus !== "sent") {
+      actions.append(actionButton("Retry email alert", booking.id, "retry-notification"));
+    }
     if (booking.calendarSync !== "synced") {
       actions.append(actionButton("Retry calendar sync", booking.id, "retry-calendar"));
     } else if (booking.status === "tentative") {
