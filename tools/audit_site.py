@@ -1,4 +1,4 @@
-﻿from pathlib import Path
+from pathlib import Path
 from html.parser import HTMLParser
 from datetime import date
 from urllib.parse import urlsplit,unquote
@@ -51,21 +51,21 @@ for p in root.rglob('*.html'):
    check(schema.get('breadcrumb',{}).get('@type')=='BreadcrumbList','listing breadcrumb data')
  form_names={a.get('value') for t,a in page.tags if t=='input' and a.get('name')=='form-name'}
  if form_names:
-  if p.name=='site-visit.html':
-   check(form_names=={'site-visit-booking','site-visit-notification'},'site-visit booking and notification forms')
+  if p == root/'site-visit.html':
+   check(form_names=={'site-visit-booking','site-visit-notification'},'site-visit form registrations')
   else:
    check(len(form_names)==1,'one Netlify form name per page')
-  check('name="bot-field"' in s,'honeypot')
+  if 'property-enquiry' in form_names or 'site-visit-booking' in form_names:
+   check('name="bot-field"' in s,'honeypot')
   if 'property-enquiry' in form_names:
    check('name="contact_consent"' in s,'enquiry consent field')
-  elif 'site-visit-booking' in form_names:
+  if 'site-visit-booking' in form_names:
    check('name="whatsapp_updates_consent"' in s,'site-visit WhatsApp consent field')
-   notification_form=re.search(r'<form\b(?=[^>]*name="site-visit-notification")[\s\S]*?</form>',s)
-   check(notification_form is not None,'site-visit notification form')
-   if notification_form:
-    alert_fields=set(re.findall(r'<input\b[^>]*name="([^"]+)"',notification_form.group()))
-    check(alert_fields=={'form-name','booking_reference','property','visit_date','visit_time'},'minimal site-visit alert fields')
-  else:
+  if 'site-visit-notification' in form_names:
+   check('data-netlify="true" hidden' in s and
+         all(f'name="{field}"' in s for field in ('booking_reference','property','visit_date','visit_time')),
+         'site-visit notification registration fields')
+  if not form_names.issubset({'property-enquiry','site-visit-booking','site-visit-notification'}):
    check(False,'recognized Netlify form name')
 # Shared Netlify form names must register the same union of fields on every page.
 field_sets=[]

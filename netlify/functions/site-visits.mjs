@@ -256,27 +256,27 @@ export function createHandler({
   logger = console,
 } = {}) {
   return async (request) => {
-    const url = new URL(request.url, env.DEPLOY_PRIME_URL || env.URL || "https://ramrealty.in");
+  const url = new URL(request.url, env.DEPLOY_PRIME_URL || env.URL || "https://ramrealty.in");
 
     if (request.method === "GET") {
-      if (url.searchParams.get("health") === "1") {
-        try {
-          const store = getStoreImpl(STORE_NAME);
-          await store.list({ prefix: "__healthcheck__" });
-          return jsonResponse(200, { status: "ok" });
-        } catch (error) {
-          logger.error("Site-visit storage health check failed.", error);
-          return jsonResponse(503, { error: "Booking storage is unavailable." });
-        }
-      }
-      if (!authorized(request, env)) return jsonResponse(401, { error: "Admin authorization required." });
+    if (url.searchParams.get("health") === "1") {
       try {
         const store = getStoreImpl(STORE_NAME);
-        return jsonResponse(200, { bookings: await listBookings(store) });
+        await store.list({ prefix: "__healthcheck__" });
+        return jsonResponse(200, { status: "ok" });
       } catch (error) {
-        logger.error("Site-visit bookings could not be loaded from Netlify Blobs.", error);
+        logger.error("Site-visit storage health check failed.", error);
         return jsonResponse(503, { error: "Booking storage is unavailable." });
       }
+    }
+      if (!authorized(request, env)) return jsonResponse(401, { error: "Admin authorization required." });
+    try {
+      const store = getStoreImpl(STORE_NAME);
+      return jsonResponse(200, { bookings: await listBookings(store) });
+    } catch (error) {
+      logger.error("Site-visit bookings could not be loaded from Netlify Blobs.", error);
+      return jsonResponse(503, { error: "Booking storage is unavailable." });
+    }
     }
 
     if (request.method === "PATCH" || request.method === "DELETE") {

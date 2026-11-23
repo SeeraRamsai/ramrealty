@@ -72,11 +72,11 @@ function renderBookings(bookings) {
     }
     card.append(heading, status, notification, details);
 
-    if (booking.calendarError) {
-      card.append(makeElement("p", `Calendar sync issue: ${booking.calendarError}`, "admin-error"));
-    }
     if (booking.notificationError) {
       card.append(makeElement("p", `Email alert issue: ${booking.notificationError}`, "admin-error"));
+    }
+    if (booking.calendarError) {
+      card.append(makeElement("p", `Calendar sync issue: ${booking.calendarError}`, "admin-error"));
     }
     const actions = makeElement("div", "", "admin-actions");
     if (booking.notificationStatus !== "sent") {

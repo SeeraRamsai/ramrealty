@@ -1,6 +1,6 @@
-﻿# Enquiry reporting with Netlify
+# Enquiry reporting with Netlify
 
-Use Netlify > ramrealty > Forms > property-enquiry to review accepted submissions. An email notification for new Netlify form submissions is configured in Submission notifications; inbox delivery has not been independently verified. Site-visit bookings use a separate function, which now creates a minimal notification-only Netlify submission after saving the booking; it includes only a reference, property and requested time, not visitor contact details. This needs deployment and an inbox test. The dashboard and inbox are the operational sources; a client-side success message alone is not counted as proof of a received enquiry.
+Use Netlify > ramrealty > Forms > property-enquiry to review accepted submissions. The Submission notifications setting is configured to email the owner for a new submission from any form, including the site-visit alert form. The dashboard and inbox are the operational sources; configuration alone does not prove inbox delivery.
 
 For a local summary, export the form's CSV into the ignored audit-results directory, then run:
 

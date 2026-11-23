@@ -95,11 +95,16 @@ for url in expected:
                    form.get('method', '').upper() == 'POST' and
                    form.get('action') == '/.netlify/functions/site-visits' for form in forms):
             errors.append(path + ': site-visit booking form/function wiring missing')
-        if not any(form.get('name') == 'site-visit-notification' and 'hidden' in form for form in forms) or \
+        if not any(form.get('name') == 'site-visit-notification' and
+                   form.get('data-netlify') == 'true' and 'hidden' in form for form in forms) or \
            'name="form-name" value="site-visit-notification"' not in row['body']:
             errors.append(path + ': site-visit email notification form is not registered')
-if by_path['/.netlify/functions/site-visits?health=1'].get('status') != 200:
-    errors.append('Site-visit function or booking storage health check failed')
+health = by_path['/.netlify/functions/site-visits?health=1']
+try:
+    if health.get('status') != 200 or json.loads(health.get('body', '{}')).get('status') != 'ok':
+        errors.append('Site-visit function or booking storage health check failed')
+except json.JSONDecodeError:
+    errors.append('Site-visit function health response is invalid')
 for path, destination in aliases.items():
     row = by_path[path]
     if row.get('status') != 301 or urljoin(base, row.get('headers', {}).get('location', '')) != base + destination:
@@ -135,7 +140,7 @@ if analytics.get('status') != 200 or measurement not in analytics.get('body', ''
     errors.append('Deployed analytics helper or configured measurement ID missing')
 result = {'checkedAt': datetime.now(timezone.utc).isoformat(), 'base': base,
           'sitemapPages': len(expected), 'responses': [{k: v for k, v in row.items() if k != 'body'} for row in rows],
-          'errors': errors, 'scope': 'HTTP, canonical, robots, sitemap and form markup only; no lead submission or notification test'}
+          'errors': errors, 'scope': 'HTTP, canonical, robots, sitemap, form registration and booking-storage availability; no lead submission or inbox delivery test'}
 args.output.parent.mkdir(parents=True, exist_ok=True)
 args.output.write_text(json.dumps(result, indent=2), encoding='utf8')
 print(json.dumps({'sitemapPages': len(expected), 'requests': len(rows), 'errors': errors}, indent=2))

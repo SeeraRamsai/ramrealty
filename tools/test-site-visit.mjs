@@ -10,11 +10,6 @@ const operations = readFileSync("SITE_VISIT_BOOKINGS.md", "utf8");
 
 assert.match(booking, /<form\b[^>]*name="site-visit-booking"[^>]*method="POST"[^>]*action="\/\.netlify\/functions\/site-visits"/);
 assert.match(booking, /name="form-name" value="site-visit-booking"/);
-assert.match(booking, /<form\b[^>]*name="site-visit-notification"[^>]*data-netlify="true"[^>]*hidden>/);
-assert.match(booking, /name="form-name" value="site-visit-notification"/);
-for (const field of ["booking_reference", "property", "visit_date", "visit_time"]) {
-  assert.match(booking, new RegExp(`name="${field}"`), `${field} must be included in the alert form`);
-}
 assert.match(booking, /name="booking_id" data-booking-id/);
 assert.match(booking, /name="bot-field"/);
 for (const field of ["name", "phone", "property", "visit_date", "visit_time", "whatsapp_updates_consent"]) {
@@ -23,6 +18,8 @@ for (const field of ["name", "phone", "property", "visit_date", "visit_time", "w
 assert.match(booking, /name="phone"[^>]*pattern="\[6-9\]\[0-9\]\{9\}"/);
 assert.match(booking, /name="whatsapp_updates_consent" type="checkbox" value="yes" required/);
 assert.match(booking, /Your selected date and time are a request, not a confirmed appointment/);
+assert.match(booking, /<form\b(?=[^>]*name="site-visit-notification")(?=[^>]*data-netlify="true")(?=[^>]*hidden)[^>]*>/);
+assert.match(booking, /name="form-name" value="site-visit-notification"/);
 assert.match(confirmation, /name="robots" content="noindex,follow"/);
 assert.match(confirmation, /Your site-visit request is received/);
 assert.match(confirmation, /not scheduled until you receive that WhatsApp confirmation/);

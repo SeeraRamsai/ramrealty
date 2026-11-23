@@ -44,6 +44,9 @@ let failCalendar = false;
 let failNotification = false;
 const fetchImpl = async (input, options = {}) => {
   const url = new URL(input);
+  if (url.hostname === "oauth2.googleapis.com") {
+    return Response.json({ access_token: "mock-access-token" });
+  }
   if (url.pathname === "/site-visit.html") {
     notificationCalls.push({ url, options });
     if (failNotification) return new Response("<!doctype html>", { status: 200 });
@@ -53,9 +56,6 @@ const fetchImpl = async (input, options = {}) => {
       redirected: { value: true },
     });
     return receipt;
-  }
-  if (url.hostname === "oauth2.googleapis.com") {
-    return Response.json({ access_token: "mock-access-token" });
   }
   calendarCalls.push({ url, options });
   if (failCalendar) return new Response("calendar unavailable", { status: 503 });
@@ -72,16 +72,16 @@ const handler = createHandler({
 });
 const baseUrl = "https://ramrealty.test/.netlify/functions/site-visits";
 
+function healthRequest(handlerToCall = handler) {
+  return handlerToCall(new Request(`${baseUrl}?health=1`));
+}
+
 function formRequest(fields) {
   return new Request(baseUrl, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams(fields),
   });
-}
-
-function healthRequest(handlerToCall = handler) {
-  return handlerToCall(new Request(`${baseUrl}?health=1`));
 }
 
 function bookingFields(id, overrides = {}) {
