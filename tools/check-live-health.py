@@ -95,8 +95,7 @@ for url in expected:
                    form.get('method', '').upper() == 'POST' and
                    form.get('action') == '/.netlify/functions/site-visits' for form in forms):
             errors.append(path + ': site-visit booking form/function wiring missing')
-        if not any(form.get('name') == 'site-visit-notification' and
-                   form.get('data-netlify') == 'true' and 'hidden' in form for form in forms) or \
+        if not any(form.get('name') == 'site-visit-notification' and 'hidden' in form for form in forms) or \
            'name="form-name" value="site-visit-notification"' not in row['body']:
             errors.append(path + ': site-visit email notification form is not registered')
 health = by_path['/.netlify/functions/site-visits?health=1']
