@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
-import { createHandler } from "../netlify/functions/site-visits.mjs";
+import siteVisitsHandler, { createHandler } from "../netlify/functions/site-visits.mjs";
+
+assert.equal(typeof siteVisitsHandler, "function", "Netlify web handler must use the default export");
 
 class MemoryStore {
   records = new Map();

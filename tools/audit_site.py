@@ -78,6 +78,12 @@ for page_path,names in field_sets:
  checks+=1
  if names!=expected_fields:errors.append(f'{page_path}: shared Netlify schema missing {sorted(expected_fields-names)}')
 sitemap=ET.parse(root/'sitemap.xml');config=tomllib.loads(Path('netlify.toml').read_text());checks+=2
+header_rules={rule.get('for'):rule.get('values',{}) for rule in config.get('headers',[])}
+global_headers=header_rules.get('/*',{})
+checks+=3
+if global_headers.get('X-Content-Type-Options')!='nosniff':errors.append('netlify.toml: nosniff header missing')
+if "object-src 'none'" not in global_headers.get('Content-Security-Policy','') or "form-action 'self'" not in global_headers.get('Content-Security-Policy',''):errors.append('netlify.toml: security policy missing')
+if header_rules.get('/assets/*',{}).get('Cache-Control')!='public, max-age=86400, must-revalidate':errors.append('netlify.toml: static asset caching header missing')
 # Canonical destinations must exist, be indexable and agree with the sitemap.
 titles=[]
 for loc in sitemap.findall('.//{http://www.sitemaps.org/schemas/sitemap/0.9}loc'):

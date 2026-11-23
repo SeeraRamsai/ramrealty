@@ -442,5 +442,4 @@ export function createHandler({
   };
 }
 
-export const handler = createHandler();
-export default handler;
+export default createHandler();
